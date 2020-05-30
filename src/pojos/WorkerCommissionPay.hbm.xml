@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 31, 2020 12:13:56 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.WorkerCommissionPay" table="worker_commission_pay" catalog="wije_wadi_manage" optimistic-lock="version">
+        <id name="workerCommissionPayId" type="java.lang.Integer">
+            <column name="worker_commission_pay_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="user" class="pojos.User" fetch="select">
+            <column name="user_id" not-null="true" />
+        </many-to-one>
+        <property name="payDate" type="string">
+            <column name="pay_date" length="45" />
+        </property>
+        <property name="payTime" type="string">
+            <column name="pay_time" length="45" />
+        </property>
+        <property name="amount" type="java.lang.Double">
+            <column name="amount" precision="22" scale="0" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
+        </property>
+    </class>
+</hibernate-mapping>

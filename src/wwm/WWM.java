@@ -5,6 +5,12 @@
  */
 package wwm;
 
+import java.util.List;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import pojos.User;
+import utils.HibernateUtil;
+
 /**
  *
  * @author Chamara
@@ -15,7 +21,12 @@ public class WWM {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        Session s = HibernateUtil.getSessionFactory().openSession();
+        List<User> list = s.createCriteria(User.class).list();
+        for (User u : list) {
+            System.out.println(u.getName());
+        }
     }
     
 }

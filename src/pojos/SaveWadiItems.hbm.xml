@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated May 31, 2020 12:13:56 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="pojos.SaveWadiItems" table="save_wadi_items" catalog="wije_wadi_manage" optimistic-lock="version">
+        <id name="saveWadiItemsId" type="java.lang.Integer">
+            <column name="save_wadi_items_id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="item" class="pojos.Item" fetch="select">
+            <column name="item_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="saveWadi" class="pojos.SaveWadi" fetch="select">
+            <column name="save_wadi_id" not-null="true" />
+        </many-to-one>
+        <property name="qty" type="java.lang.Integer">
+            <column name="qty" />
+        </property>
+        <property name="commissionPerItem" type="java.lang.Double">
+            <column name="commission_per_item" precision="22" scale="0" />
+        </property>
+        <property name="totalCommission" type="java.lang.Double">
+            <column name="total_commission" precision="22" scale="0">
+                <comment>qty * commission_per_item</comment>
+            </column>
+        </property>
+        <property name="rate" type="java.lang.Integer">
+            <column name="rate" />
+        </property>
+        <property name="status" type="java.lang.Integer">
+            <column name="status" />
+        </property>
+    </class>
+</hibernate-mapping>
