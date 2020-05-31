@@ -9,6 +9,7 @@ import java.util.List;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import pojos.User;
+import utils.Connection;
 import utils.HibernateUtil;
 
 /**
@@ -22,7 +23,7 @@ public class WWM {
      */
     public static void main(String[] args) {
         
-        Session s = HibernateUtil.getSessionFactory().openSession();
+        Session s = Connection.getConnection();
         List<User> list = s.createCriteria(User.class).list();
         for (User u : list) {
             System.out.println(u.getName());
