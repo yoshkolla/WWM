@@ -5,12 +5,10 @@
  */
 package wwm;
 
-import java.util.List;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import pojos.User;
-import utils.Connection;
-import utils.HibernateUtil;
+import com.sun.java.swing.plaf.windows.WindowsLookAndFeel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import mainui.SplashScreen;
 
 /**
  *
@@ -21,13 +19,9 @@ public class WWM {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
-        
-        Session s = Connection.getConnection();
-        List<User> list = s.createCriteria(User.class).list();
-        for (User u : list) {
-            System.out.println(u.getName());
-        }
+    public static void main(String[] args) throws UnsupportedLookAndFeelException {
+        UIManager.setLookAndFeel(new WindowsLookAndFeel());
+        new SplashScreen().setVisible(true);
     }
     
 }
