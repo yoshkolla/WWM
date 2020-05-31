@@ -5,10 +5,7 @@
  */
 package mainui;
 
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import pojos.User;
-import utils.Connection;
 
 /**
  *
@@ -18,17 +15,13 @@ public class Home extends javax.swing.JFrame {
     
     private static User user;
 
-    public static void setUser(String username) {
-        Session s = Connection.getConnection();
-        user = (User) s.createCriteria(User.class).add(Restrictions.eq("username", username)).uniqueResult();
-    }
-
     /**
      * Creates new form Home
+     * @param user
      */
-    public Home(String username) {
+    public Home(User user) {
         initComponents();
-        setUser(username);
+        this.user = user;
         jLabel1.setText(user.getName());
     }
 
@@ -97,7 +90,7 @@ public class Home extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Home("admin").setVisible(true);
+                //new Home().setVisible(true);
             }
         });
     }

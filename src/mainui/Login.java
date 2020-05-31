@@ -5,6 +5,22 @@
  */
 package mainui;
 
+import com.sun.java.swing.plaf.windows.WindowsButtonUI;
+import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
+import pojos.User;
+import utils.Connection;
+
 /**
  *
  * @author SCORFi3LD
@@ -14,8 +30,22 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    byte attemp = 0;
+    int Xmouse, Ymouse;
+
     public Login() {
         initComponents();
+
+        seticon();
+        Window_Closer();
+        setuis();
+        customImg();
+        setBounds(getX(), getY(), 700, 500);
+    }
+
+    private void customImg() {
+        jTextField_UN.setTrailingComponent(new JLabel(new ImageIcon(getClass().getResource("/images/user-ico.png"))));
+        jPasswordField1.setTrailingComponent(new JLabel(new ImageIcon(getClass().getResource("/images/lock-ico.png"))));
     }
 
     /**
@@ -27,76 +57,250 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jPasswordField1 = new javax.swing.JPasswordField();
-        jLabel3 = new javax.swing.JLabel();
+        btn_Mysecure = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        lb_msg = new javax.swing.JLabel();
+        lb_timeremaining = new javax.swing.JLabel();
+        lb_attemps = new javax.swing.JLabel();
+        btn_close = new javax.swing.JButton();
+        btn_login = new javax.swing.JButton();
+        lb_copyright = new javax.swing.JLabel();
+        jTextField_UN = new com.alee.laf.text.WebTextField();
+        jPasswordField1 = new com.alee.laf.text.WebPasswordField();
+        lb_bg = new javax.swing.JLabel();
+
+        btn_Mysecure.setText("jButton3");
+        btn_Mysecure.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_MysecureActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("User Login");
+        setTitle("System Login");
+        setAlwaysOnTop(true);
+        setUndecorated(true);
+        setOpacity(0.9F);
         setResizable(false);
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                formMouseDragged(evt);
+            }
+        });
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+        });
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Username");
-
-        jLabel2.setText("Password");
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("User Login");
-        jLabel3.setToolTipText("");
-
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jButton1.setText("Login");
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help24.png"))); // NOI18N
+        jButton1.setToolTipText("Technical Support");
+        jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setFocusable(false);
+        jButton1.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/images/help2_24.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 460, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(75, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1)
-                    .addComponent(jPasswordField1)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(76, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(87, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
-        );
+        lb_msg.setFont(new java.awt.Font("Consolas", 0, 24)); // NOI18N
+        lb_msg.setForeground(new java.awt.Color(204, 204, 204));
+        lb_msg.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        getContentPane().add(lb_msg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 700, 50));
+
+        lb_timeremaining.setFont(new java.awt.Font("Consolas", 0, 24)); // NOI18N
+        lb_timeremaining.setForeground(new java.awt.Color(255, 102, 102));
+        lb_timeremaining.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lb_timeremaining.setText("System exit");
+        getContentPane().add(lb_timeremaining, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 700, 50));
+
+        lb_attemps.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lb_attemps.setText("3 remaining");
+        getContentPane().add(lb_attemps, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 120, -1));
+
+        btn_close.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        btn_close.setForeground(new java.awt.Color(233, 238, 232));
+        btn_close.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/close.png"))); // NOI18N
+        btn_close.setToolTipText("Close");
+        btn_close.setBorderPainted(false);
+        btn_close.setContentAreaFilled(false);
+        btn_close.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btn_close.setRolloverIcon(new javax.swing.ImageIcon(getClass().getResource("/images/close_roll.png"))); // NOI18N
+        btn_close.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_closeActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_close, new org.netbeans.lib.awtextra.AbsoluteConstraints(648, 0, 52, 30));
+
+        btn_login.setBackground(new java.awt.Color(255, 180, 0));
+        btn_login.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        btn_login.setForeground(new java.awt.Color(246, 246, 196));
+        btn_login.setText("LOGIN");
+        btn_login.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 180, 0), 1, true));
+        btn_login.setFocusable(false);
+        btn_login.setOpaque(false);
+        btn_login.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btn_loginMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btn_loginMouseExited(evt);
+            }
+        });
+        btn_login.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_loginActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_login, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, 290, 40));
+
+        lb_copyright.setForeground(new java.awt.Color(204, 204, 204));
+        lb_copyright.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lb_copyright.setText("  Copyright © 2020 APK Hub ");
+        getContentPane().add(lb_copyright, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 480, 200, -1));
+
+        jTextField_UN.setDrawFocus(false);
+        jTextField_UN.setDrawShade(false);
+        jTextField_UN.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jTextField_UN.setHideInputPromptOnFocus(false);
+        jTextField_UN.setInputPrompt("User Name");
+        jTextField_UN.setRound(3);
+        jTextField_UN.setScrollOffset(1);
+        jTextField_UN.setShadeWidth(0);
+        jTextField_UN.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextField_UNKeyPressed(evt);
+            }
+        });
+        getContentPane().add(jTextField_UN, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 290, 40));
+
+        jPasswordField1.setDrawFocus(false);
+        jPasswordField1.setDrawShade(false);
+        jPasswordField1.setEchoChar('\u25cf');
+        jPasswordField1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jPasswordField1.setHideInputPromptOnFocus(false);
+        jPasswordField1.setInputPrompt("Password");
+        jPasswordField1.setRound(3);
+        jPasswordField1.setShadeWidth(0);
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyPressed(evt);
+            }
+        });
+        getContentPane().add(jPasswordField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, 290, 40));
+
+        lb_bg.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LoginWall.png"))); // NOI18N
+        getContentPane().add(lb_bg, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 500));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
+
+        String user = jTextField_UN.getText();
+        String password = new String(jPasswordField1.getPassword());
+
+        String aa = "";
+        if (user.equals(aa) && password.equals(aa)) {
+            viewThread(":( Please insert user name & password.");
+        } else {
+            if (attemp < 3) {
+                try {
+                    Session s = Connection.getConnection();
+                    User u = (User) s.createCriteria(User.class).add(
+                            Restrictions.and(
+                                    Restrictions.eq("username", user), 
+                                    Restrictions.eq("password", password)
+                            )).uniqueResult();
+                    if (u != null) {
+                        System.out.println(u.getName());
+                        if (u.getStatus() == 0) {
+                            viewThread(":( Access Denied. Account had been blocked.");
+                        } else {
+                            viewThread(":) Access Granted!", u);
+                        }
+                    } else {
+                        viewThread(":( You'r Entered User Name & Password Are Incorrect");
+                        attemp++;
+                        lb_attemps.setVisible(true);
+                        lb_attemps.setText(3 - attemp + " remaining");
+                    }
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(rootPane, "Error in login", "Error", 0);
+                    e.printStackTrace();
+                }
+            }
+            if (attemp == 3) {
+                lb_timeremaining.setVisible(true);
+                lb_attemps.setVisible(false);
+                jTextField_UN.setEnabled(false);
+                jPasswordField1.setEnabled(false);
+                btn_login.setEnabled(false);
+                btn_close.setEnabled(false);
+                UnLock_countdown();
+            }
+        }
+
+    }//GEN-LAST:event_btn_loginActionPerformed
+
+    private void btn_loginMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseEntered
+
+        btn_login.setForeground(Color.BLACK);
+    }//GEN-LAST:event_btn_loginMouseEntered
+
+    private void btn_loginMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_loginMouseExited
+
+        btn_login.setForeground(Color.WHITE);
+    }//GEN-LAST:event_btn_loginMouseExited
+
+    private void formMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseDragged
+
+        int x = evt.getXOnScreen();
+        int y = evt.getYOnScreen();
+        this.setLocation(x - Xmouse, y - Ymouse);
+    }//GEN-LAST:event_formMouseDragged
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+
+        Xmouse = evt.getX();
+        Ymouse = evt.getY();
+    }//GEN-LAST:event_formMousePressed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
-        new Home("admin").setVisible(true);
-        this.dispose();
+        //new AboutUs(this, true).setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_MysecureActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_MysecureActionPerformed
+
+    }//GEN-LAST:event_btn_MysecureActionPerformed
+
+    private void btn_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_closeActionPerformed
+
+        System.exit(0);
+    }//GEN-LAST:event_btn_closeActionPerformed
+
+    private void jTextField_UNKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField_UNKeyPressed
+
+        int i = evt.getKeyCode();
+        if (i == evt.VK_ENTER) {
+            jPasswordField1.grabFocus();
+        }
+    }//GEN-LAST:event_jTextField_UNKeyPressed
+
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+
+        int i = evt.getKeyCode();
+        if (i == evt.VK_ENTER) {
+            btn_login.doClick();
+        }
+    }//GEN-LAST:event_jPasswordField1KeyPressed
 
     /**
      * @param args the command line arguments
@@ -105,28 +309,23 @@ public class Login extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Login.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        //</editor-fold>
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new Login().setVisible(true);
             }
@@ -134,11 +333,134 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JButton btn_Mysecure;
+    private javax.swing.JButton btn_close;
+    public static javax.swing.JButton btn_login;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    public static com.alee.laf.text.WebPasswordField jPasswordField1;
+    public static com.alee.laf.text.WebTextField jTextField_UN;
+    private javax.swing.JLabel lb_attemps;
+    private javax.swing.JLabel lb_bg;
+    private javax.swing.JLabel lb_copyright;
+    private javax.swing.JLabel lb_msg;
+    private javax.swing.JLabel lb_timeremaining;
     // End of variables declaration//GEN-END:variables
+
+    private void setuis() {
+
+        btn_close.setUI(new WindowsButtonUI());
+        btn_login.setUI(new WindowsButtonUI());
+        btn_close.setContentAreaFilled(false);
+        btn_login.setContentAreaFilled(false);
+        btn_close.setFocusPainted(false);
+        btn_login.setFocusPainted(false);
+        btn_close.setOpaque(true);
+        btn_login.setOpaque(true);
+        jTextField_UN.grabFocus();
+        jTextField_UN.setText("");
+        jPasswordField1.setText("");
+        lb_attemps.setVisible(false);
+        lb_timeremaining.setVisible(false);
+    }
+
+    private void seticon() {
+
+        try {
+            setIconImage(ImageIO.read(new BufferedInputStream(getClass().getResourceAsStream("/images/lock.png"))));
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void UnLock_countdown() {
+
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    for (int i = 60; i >= 0; i--) {
+                        lb_timeremaining.setText("Wait " + i + " Seconds for unlock");
+
+                        if (i == 0) {
+                            lb_timeremaining.setVisible(false);
+                            jTextField_UN.setEnabled(true);
+                            jPasswordField1.setEnabled(true);
+                            btn_login.setEnabled(true);
+                            btn_close.setEnabled(true);
+                            jTextField_UN.grabFocus();
+                            attemp = 0;
+                        }
+                        Thread.sleep(1000);
+                    }
+                    Thread.currentThread().stop();
+
+                } catch (Exception e) {
+                }
+            }
+        }).start();
+    }
+
+    private void Window_Closer() {
+
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+
+            @Override
+            public void windowClosing(WindowEvent evt) {
+                if (!(attemp == 3)) {
+                    System.exit(0);
+                }
+            }
+        }
+        );
+    }
+
+    private static Thread t;
+
+    private void viewThread(String s) {
+        t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    lb_msg.setText(s);
+                    for (int i = 1; i < 20; i++) {
+                        Thread.sleep(3);
+                        lb_msg.setFont(new java.awt.Font("Segoe UI", 0, i));
+                    }
+                    Thread.sleep(1500);
+                    lb_msg.setText("");
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+        t.start();
+    }
+
+    private void viewThread(String s, User u) {
+        t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    lb_msg.setText(s);
+                    for (int i = 1; i < 20; i++) {
+                        Thread.sleep(3);
+                        lb_msg.setFont(new java.awt.Font("Segoe UI", 0, i));
+                    }
+                    Thread.sleep(1000);
+                    new Home(u).setVisible(true);
+                    dispose();
+                    System.gc();
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        };
+        t.start();
+
+    }
+
 }

@@ -130,7 +130,7 @@ public class SplashScreen extends javax.swing.JFrame {
                             new Login().setVisible(true);
                             dispose();
                         }
-                        Thread.sleep(100);
+                        Thread.sleep(50);
                     }
                 } catch (Exception e) {
                 }
