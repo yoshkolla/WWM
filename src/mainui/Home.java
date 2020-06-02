@@ -7,7 +7,9 @@ package mainui;
 
 import javax.swing.JInternalFrame;
 import pojos.User;
-import subui.CreateItem;
+import subui.item;
+import subui.wadi;
+import subui.worker;
 
 /**
  *
@@ -82,9 +84,19 @@ public class Home extends javax.swing.JFrame {
         jMenu2.add(jMenuItem1);
 
         jMenuItem2.setText("Wadi ");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setText("Workers");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setText("User");
@@ -130,13 +142,33 @@ public class Home extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
         try {
-            JInternalFrame frame = new CreateItem();
+            JInternalFrame frame = new item();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            JInternalFrame frame = new wadi();
+            FrameContainer.add(frame).setVisible(true);
+            frame.setMaximum(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        try {
+            JInternalFrame frame = new worker();
+            FrameContainer.add(frame).setVisible(true);
+            frame.setMaximum(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     /**
      * @param args the command line arguments
