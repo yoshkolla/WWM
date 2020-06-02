@@ -112,7 +112,7 @@ public class Workers  implements java.io.Serializable {
         this.wadiUsers = wadiUsers;
     }
 
-
+    
 
 
 }

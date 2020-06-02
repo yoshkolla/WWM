@@ -8,6 +8,7 @@ package mainui;
 import javax.swing.JInternalFrame;
 import pojos.User;
 import subui.CreateItem;
+import subui.CreateWadi;
 
 /**
  *
@@ -31,6 +32,7 @@ public class Home extends javax.swing.JFrame {
         this.user = user;
         lb_user.setText("Currently Logged As : " + user.getName());
         setExtendedState(MAXIMIZED_BOTH);
+        webButton1.setRound(60);
     }
 
     /**
@@ -43,6 +45,7 @@ public class Home extends javax.swing.JFrame {
     private void initComponents() {
 
         FrameContainer = new javax.swing.JDesktopPane();
+        webButton1 = new com.alee.laf.button.WebButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -60,19 +63,37 @@ public class Home extends javax.swing.JFrame {
 
         FrameContainer.setBackground(new java.awt.Color(255, 255, 255));
 
+        webButton1.setText("+");
+        webButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        webButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                webButton1ActionPerformed(evt);
+            }
+        });
+
+        FrameContainer.setLayer(webButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+
         javax.swing.GroupLayout FrameContainerLayout = new javax.swing.GroupLayout(FrameContainer);
         FrameContainer.setLayout(FrameContainerLayout);
         FrameContainerLayout.setHorizontalGroup(
             FrameContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 751, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FrameContainerLayout.createSequentialGroup()
+                .addContainerGap(670, Short.MAX_VALUE)
+                .addComponent(webButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
         );
         FrameContainerLayout.setVerticalGroup(
             FrameContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 482, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FrameContainerLayout.createSequentialGroup()
+                .addContainerGap(400, Short.MAX_VALUE)
+                .addComponent(webButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         jMenu2.setText("Create");
+        jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
+        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem1.setText("Items");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -81,34 +102,43 @@ public class Home extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem1);
 
+        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem2.setText("Wadi ");
         jMenu2.add(jMenuItem2);
 
+        jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem3.setText("Workers");
         jMenu2.add(jMenuItem3);
 
+        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem4.setText("User");
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Payment");
+        jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
+        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem5.setText("Pay Commission ");
         jMenu3.add(jMenuItem5);
 
         jMenuBar1.add(jMenu3);
 
         jMenu1.setText("Reports");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
+        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem6.setText("Commission Report");
         jMenu1.add(jMenuItem6);
 
         jMenuBar1.add(jMenu1);
 
+        lb_user.setForeground(new java.awt.Color(0, 102, 204));
         lb_user.setText("User");
         lb_user.setEnabled(false);
         lb_user.setFocusable(false);
+        lb_user.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         jMenuBar1.add(lb_user);
 
         setJMenuBar(jMenuBar1);
@@ -137,6 +167,11 @@ public class Home extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void webButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_webButton1ActionPerformed
+
+        new CreateWadi(this, true).setVisible(true);
+    }//GEN-LAST:event_webButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -186,5 +221,14 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenu lb_user;
+    private com.alee.laf.button.WebButton webButton1;
     // End of variables declaration//GEN-END:variables
+
+    private void removeOtherFrames() {
+        JInternalFrame[] allFrames = FrameContainer.getAllFrames();
+        for (JInternalFrame frame : allFrames) {
+            frame.dispose();
+        }
+    }
+
 }
