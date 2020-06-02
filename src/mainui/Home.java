@@ -5,10 +5,16 @@
  */
 package mainui;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import pojos.User;
-import subui.CreateItem;
 import subui.CreateWadi;
+import subui.item;
+import subui.user;
+import subui.wadi;
+import subui.worker;
 
 /**
  *
@@ -44,7 +50,22 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        FrameContainer = new javax.swing.JDesktopPane();
+        FrameContainer = new javax.swing.JDesktopPane(){
+            private Image image;
+            {
+                try{
+                    ImageIcon ii = new ImageIcon(getClass().getResource("/images/background.png"));
+                    image = ii.getImage();
+                }catch(Exception e){
+                }
+            }
+            @Override
+            protected void paintComponent(Graphics graphcs){
+                super.paintComponent(graphcs);
+                graphcs.drawImage(image,0,0,getWidth(),getHeight(),this);
+            }
+
+        };
         webButton1 = new com.alee.laf.button.WebButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
@@ -104,14 +125,29 @@ public class Home extends javax.swing.JFrame {
 
         jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem2.setText("Wadi ");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem2);
 
         jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem3.setText("Workers");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem4.setText("User");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuBar1.add(jMenu2);
@@ -160,7 +196,7 @@ public class Home extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
         try {
-            JInternalFrame frame = new CreateItem();
+            JInternalFrame frame = new item();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
         } catch (Exception ex) {
@@ -172,6 +208,36 @@ public class Home extends javax.swing.JFrame {
 
         new CreateWadi(this, true).setVisible(true);
     }//GEN-LAST:event_webButton1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        try {
+            JInternalFrame frame = new wadi();
+            FrameContainer.add(frame).setVisible(true);
+            frame.setMaximum(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        try {
+            JInternalFrame frame = new worker();
+            FrameContainer.add(frame).setVisible(true);
+            frame.setMaximum(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        try {
+            JInternalFrame frame = new user();
+            FrameContainer.add(frame).setVisible(true);
+            frame.setMaximum(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
