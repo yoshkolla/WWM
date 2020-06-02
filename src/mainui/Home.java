@@ -5,6 +5,9 @@
  */
 package mainui;
 
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import pojos.User;
 import subui.item;
@@ -45,7 +48,21 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        FrameContainer = new javax.swing.JDesktopPane();
+        FrameContainer = new javax.swing.JDesktopPane(){
+            private Image image;
+            {
+                try{
+                    ImageIcon ii = new ImageIcon(getClass().getResource("/images/background.png"));
+                    image = ii.getImage();
+                }catch(Exception e){
+                }
+            }
+            @Override
+            protected void paintComponent(Graphics graphcs){
+                super.paintComponent(graphcs);
+                graphcs.drawImage(image,0,0,getWidth(),getHeight(),this);
+            }
+        };
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -59,7 +76,7 @@ public class Home extends javax.swing.JFrame {
         lb_user = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("WWM");
+        setTitle("Wijayasiri Hotel And Bakers");
 
         FrameContainer.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -71,11 +88,13 @@ public class Home extends javax.swing.JFrame {
         );
         FrameContainerLayout.setVerticalGroup(
             FrameContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 482, Short.MAX_VALUE)
+            .addGap(0, 481, Short.MAX_VALUE)
         );
 
         jMenu2.setText("Create");
+        jMenu2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem1.setText("Items");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +103,7 @@ public class Home extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem1);
 
+        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem2.setText("Wadi ");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,6 +112,7 @@ public class Home extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem2);
 
+        jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem3.setText("Workers");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,6 +121,7 @@ public class Home extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem3);
 
+        jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem4.setText("User");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -111,14 +133,18 @@ public class Home extends javax.swing.JFrame {
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Payment");
+        jMenu3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem5.setText("Pay Commission ");
         jMenu3.add(jMenuItem5);
 
         jMenuBar1.add(jMenu3);
 
         jMenu1.setText("Reports");
+        jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        jMenuItem6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuItem6.setText("Commission Report");
         jMenu1.add(jMenuItem6);
 
@@ -127,6 +153,7 @@ public class Home extends javax.swing.JFrame {
         lb_user.setText("User");
         lb_user.setEnabled(false);
         lb_user.setFocusable(false);
+        lb_user.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jMenuBar1.add(lb_user);
 
         setJMenuBar(jMenuBar1);
