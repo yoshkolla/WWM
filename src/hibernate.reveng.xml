@@ -41,15 +41,15 @@ Contributor(s):
 -->
 <hibernate-reverse-engineering>
   <schema-selection match-catalog="wije_wadi_manage"/>
-  <table-filter match-name="save_wadi_worker"/>
-  <table-filter match-name="user"/>
+  <table-filter match-name="wadi_user"/>
+  <table-filter match-name="worker_commission_pay"/>
   <table-filter match-name="wadi"/>
+  <table-filter match-name="save_wadi_worker"/>
+  <table-filter match-name="save_wadi"/>
+  <table-filter match-name="item"/>
+  <table-filter match-name="user"/>
   <table-filter match-name="save_wadi_items"/>
+  <table-filter match-name="wadi_items"/>
   <table-filter match-name="save_wadi_payment"/>
   <table-filter match-name="workers"/>
-  <table-filter match-name="save_wadi"/>
-  <table-filter match-name="wadi_items"/>
-  <table-filter match-name="worker_commission_pay"/>
-  <table-filter match-name="wadi_user"/>
-  <table-filter match-name="item"/>
 </hibernate-reverse-engineering>

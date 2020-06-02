@@ -1,5 +1,5 @@
 package pojos;
-// Generated May 31, 2020 12:13:55 AM by Hibernate Tools 4.3.1
+// Generated Jun 2, 2020 11:01:12 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -13,6 +13,7 @@ public class SaveWadi  implements java.io.Serializable {
 
      private Integer saveWadiId;
      private User user;
+     private Wadi wadi;
      private String savedDate;
      private String savedTime;
      private Integer status;
@@ -23,11 +24,13 @@ public class SaveWadi  implements java.io.Serializable {
     }
 
 	
-    public SaveWadi(User user) {
+    public SaveWadi(User user, Wadi wadi) {
         this.user = user;
+        this.wadi = wadi;
     }
-    public SaveWadi(User user, String savedDate, String savedTime, Integer status, Set saveWadiItemses, Set saveWadiWorkers) {
+    public SaveWadi(User user, Wadi wadi, String savedDate, String savedTime, Integer status, Set saveWadiItemses, Set saveWadiWorkers) {
        this.user = user;
+       this.wadi = wadi;
        this.savedDate = savedDate;
        this.savedTime = savedTime;
        this.status = status;
@@ -48,6 +51,13 @@ public class SaveWadi  implements java.io.Serializable {
     
     public void setUser(User user) {
         this.user = user;
+    }
+    public Wadi getWadi() {
+        return this.wadi;
+    }
+    
+    public void setWadi(Wadi wadi) {
+        this.wadi = wadi;
     }
     public String getSavedDate() {
         return this.savedDate;
