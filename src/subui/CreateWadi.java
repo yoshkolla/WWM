@@ -104,7 +104,7 @@ public class CreateWadi extends javax.swing.JDialog {
         tbl_worker_summary = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        lb_title = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create Wadi Details");
@@ -146,6 +146,11 @@ public class CreateWadi extends javax.swing.JDialog {
             }
         });
         jScrollPane1.setViewportView(tbl_wadi);
+        if (tbl_wadi.getColumnModel().getColumnCount() > 0) {
+            tbl_wadi.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_wadi.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_wadi.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -223,6 +228,11 @@ public class CreateWadi extends javax.swing.JDialog {
             }
         });
         jScrollPane7.setViewportView(tbl_wadi_workers);
+        if (tbl_wadi_workers.getColumnModel().getColumnCount() > 0) {
+            tbl_wadi_workers.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_wadi_workers.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_wadi_workers.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
 
         tbl_all_workers.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         tbl_all_workers.setModel(new javax.swing.table.DefaultTableModel(
@@ -243,21 +253,27 @@ public class CreateWadi extends javax.swing.JDialog {
         });
         tbl_all_workers.setRowHeight(20);
         tbl_all_workers.setShowHorizontalLines(false);
+        tbl_all_workers.getTableHeader().setReorderingAllowed(false);
         tbl_all_workers.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tbl_all_workersMouseReleased(evt);
             }
         });
         jScrollPane3.setViewportView(tbl_all_workers);
+        if (tbl_all_workers.getColumnModel().getColumnCount() > 0) {
+            tbl_all_workers.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_all_workers.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_all_workers.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,7 +282,7 @@ public class CreateWadi extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_next2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -337,6 +353,7 @@ public class CreateWadi extends javax.swing.JDialog {
         });
         tbl_wadi_items.setRowHeight(20);
         tbl_wadi_items.setShowHorizontalLines(false);
+        tbl_wadi_items.getTableHeader().setReorderingAllowed(false);
         tbl_wadi_items.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tbl_wadi_itemsMouseReleased(evt);
@@ -344,6 +361,9 @@ public class CreateWadi extends javax.swing.JDialog {
         });
         jScrollPane6.setViewportView(tbl_wadi_items);
         if (tbl_wadi_items.getColumnModel().getColumnCount() > 0) {
+            tbl_wadi_items.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_wadi_items.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_wadi_items.getColumnModel().getColumn(0).setMaxWidth(0);
             tbl_wadi_items.getColumnModel().getColumn(2).setMinWidth(45);
             tbl_wadi_items.getColumnModel().getColumn(2).setPreferredWidth(50);
             tbl_wadi_items.getColumnModel().getColumn(2).setMaxWidth(55);
@@ -368,12 +388,18 @@ public class CreateWadi extends javax.swing.JDialog {
         });
         tbl_all_items.setRowHeight(20);
         tbl_all_items.setShowHorizontalLines(false);
+        tbl_all_items.getTableHeader().setReorderingAllowed(false);
         tbl_all_items.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tbl_all_itemsMouseReleased(evt);
             }
         });
         jScrollPane8.setViewportView(tbl_all_items);
+        if (tbl_all_items.getColumnModel().getColumnCount() > 0) {
+            tbl_all_items.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_all_items.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_all_items.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -401,19 +427,20 @@ public class CreateWadi extends javax.swing.JDialog {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(166, 166, 166)
-                .addComponent(btnAddItems)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRemoveItems)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(166, 166, 166)
+                        .addComponent(btnAddItems)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRemoveItems))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_next3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_next3)
-                .addContainerGap())
         );
 
         jTabbedPane.addTab("tab3", jPanel3);
@@ -547,9 +574,9 @@ public class CreateWadi extends javax.swing.JDialog {
 
         jPanel6.setBackground(new java.awt.Color(51, 153, 255));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Title Here");
+        lb_title.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lb_title.setForeground(new java.awt.Color(255, 255, 255));
+        lb_title.setText("Select the Wadi");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -557,14 +584,14 @@ public class CreateWadi extends javax.swing.JDialog {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lb_title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lb_title, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -594,6 +621,7 @@ public class CreateWadi extends javax.swing.JDialog {
     private void btn_next1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_next1ActionPerformed
 
         jTabbedPane.setSelectedIndex(1);
+        lb_title.setText("Select the Workers");
         int id = Integer.parseInt(tbl_wadi.getValueAt(tbl_wadi.getSelectedRow(), 0).toString());
         loadWadiWorkers(id);
         if (isWorkersAdded()) {
@@ -606,18 +634,21 @@ public class CreateWadi extends javax.swing.JDialog {
     private void btn_next2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_next2ActionPerformed
 
         jTabbedPane.setSelectedIndex(2);
+        lb_title.setText("Select the Items");
         loadItems();
     }//GEN-LAST:event_btn_next2ActionPerformed
 
     private void btn_next3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_next3ActionPerformed
 
         jTabbedPane.setSelectedIndex(3);
+        lb_title.setText("Quality Check");
         loadItemQc();
     }//GEN-LAST:event_btn_next3ActionPerformed
 
     private void btn_next4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_next4ActionPerformed
 
         jTabbedPane.setSelectedIndex(4);
+        lb_title.setText("Finalize");
         loadSummary();
     }//GEN-LAST:event_btn_next4ActionPerformed
 
@@ -872,7 +903,6 @@ public class CreateWadi extends javax.swing.JDialog {
     private javax.swing.JButton btn_next4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -889,6 +919,7 @@ public class CreateWadi extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane;
+    private javax.swing.JLabel lb_title;
     private javax.swing.JTable tbl_all_items;
     private javax.swing.JTable tbl_all_workers;
     private javax.swing.JTable tbl_item_summary;
