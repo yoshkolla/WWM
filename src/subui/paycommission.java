@@ -9,7 +9,6 @@ import ctrl.helper;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.List;
-import java.util.Set;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -32,7 +31,6 @@ public class paycommission extends javax.swing.JInternalFrame {
      * Creates new form item
      */
     Session ses = utils.HibernateUtil.getSessionFactory().openSession();
-    helper help = new helper();
     User user = Home.getLogedUser();
     DecimalFormat df = new DecimalFormat("#0.00");
 
@@ -44,7 +42,7 @@ public class paycommission extends javax.swing.JInternalFrame {
         initComponents();
         clear();
         loadWorkersToDropDown();
-        
+
     }
 
     /**
@@ -73,6 +71,7 @@ public class paycommission extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setClosable(true);
@@ -256,6 +255,14 @@ public class paycommission extends javax.swing.JInternalFrame {
             }
         });
 
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton3.setText("Delete Selected Item");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -270,6 +277,8 @@ public class paycommission extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)))
                 .addContainerGap())
         );
@@ -283,7 +292,9 @@ public class paycommission extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
                 .addGap(13, 13, 13)
-                .addComponent(jButton4)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jButton3))
                 .addContainerGap())
         );
 
@@ -327,10 +338,36 @@ public class paycommission extends javax.swing.JInternalFrame {
         loadWorkersData();
     }//GEN-LAST:event_worker_listActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (jTable1.getSelectedRow() >= 0) {
+            int option = JOptionPane.showConfirmDialog(this, "Do you want to delete this Payment ?");
+            if (option == 0) {
+                on_update_item_id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+                Transaction tr = ses.beginTransaction();
+                WorkerCommissionPay item = (WorkerCommissionPay) ses.load(WorkerCommissionPay.class, on_update_item_id);
+                item.setStatus(0);
+                ses.update(item);
+                Workers worker = item.getWorkers();
+                double amount = worker.getPaybleAmount() + item.getAmount();
+                worker.setPaybleAmount(amount);
+                ses.update(worker);
+                tr.commit();
+                paybale_amount.setText(df.format(worker.getPaybleAmount()));
+                clear();
+                loadDataToTable(worker.getWorkersId());
+
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Plase Select Row From Table !");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_save1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -356,18 +393,18 @@ public class paycommission extends javax.swing.JInternalFrame {
                 String ID = worker_list.getSelectedItem().toString().split("-")[0];
                 int worker_id = Integer.parseInt(ID);
                 Workers item = (Workers) ses.load(Workers.class, worker_id);
-                if(item != null){
-                    double amount  = Double.parseDouble(Amount);
-                    if(item.getPaybleAmount() >= amount){
+                if (item != null) {
+                    double amount = Double.parseDouble(Amount);
+                    if (item.getPaybleAmount() >= amount) {
                         WorkerCommissionPay p = new WorkerCommissionPay();
                         p.setAmount(amount);
-                        p.setPayDate(help.getDate());
-                        p.setPayTime(help.getTime());
+                        p.setPayDate(helper.getDate());
+                        p.setPayTime(helper.getTime());
                         p.setStatus(1);
                         p.setUser(user);
                         p.setWorkers(item);
                         ses.save(p);
-                        
+
                         double curr = item.getPaybleAmount() - amount;
                         item.setPaybleAmount(curr);
                         ses.update(item);
@@ -376,15 +413,15 @@ public class paycommission extends javax.swing.JInternalFrame {
                         paybale_amount.setText(df.format(item.getPaybleAmount()));
                         clear();
                         loadDataToTable(worker_id);
-                        
-                    }else{
+
+                    } else {
                         JOptionPane.showMessageDialog(this, "Amount is too high !");
                     }
-                }else{
+                } else {
                     JOptionPane.showMessageDialog(this, "Emty Data ! Please Retry.");
-                
+
                 }
-                
+
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Emty Data ! Please Retry.");
             }
@@ -435,15 +472,15 @@ public class paycommission extends javax.swing.JInternalFrame {
         List<WorkerCommissionPay> item_list = cr.list();
         for (WorkerCommissionPay it : item_list) {
             int iid = it.getWorkers().getWorkersId();
-            if(iid == id){
-            Vector v = new Vector();
-            v.add(it.getWorkerCommissionPayId());
-            v.add(it.getWorkers().getName());
-            v.add(df.format(it.getAmount()));
-            v.add(it.getPayDate());
-            v.add(it.getPayTime());
-            v.add(it.getUser().getName());
-            dtm.addRow(v);
+            if (iid == id) {
+                Vector v = new Vector();
+                v.add(it.getWorkerCommissionPayId());
+                v.add(it.getWorkers().getName());
+                v.add(df.format(it.getAmount()));
+                v.add(it.getPayDate());
+                v.add(it.getPayTime());
+                v.add(it.getUser().getName());
+                dtm.addRow(v);
             }
         }
 
