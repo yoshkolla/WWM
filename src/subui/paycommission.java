@@ -7,7 +7,9 @@ package subui;
 
 import ctrl.helper;
 import java.awt.event.KeyEvent;
+import java.text.DecimalFormat;
 import java.util.List;
+import java.util.Set;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,8 +18,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import pojos.Item;
 import pojos.User;
+import pojos.WorkerCommissionPay;
 import pojos.Workers;
 
 /**
@@ -32,6 +34,7 @@ public class paycommission extends javax.swing.JInternalFrame {
     Session ses = utils.HibernateUtil.getSessionFactory().openSession();
     helper help = new helper();
     User user = Home.getLogedUser();
+    DecimalFormat df = new DecimalFormat("#0.00");
 
     //variable on update
     int on_update = 0;
@@ -40,7 +43,8 @@ public class paycommission extends javax.swing.JInternalFrame {
     public paycommission() {
         initComponents();
         clear();
-        loadDataToTable();
+        loadWorkersToDropDown();
+        
     }
 
     /**
@@ -56,16 +60,18 @@ public class paycommission extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txt_worker_name = new javax.swing.JTextField();
+        txt_worker_pay = new javax.swing.JTextField();
         btn_save = new javax.swing.JButton();
         btn_save1 = new javax.swing.JButton();
-        worker_type = new javax.swing.JComboBox<>();
+        worker_list = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel5 = new javax.swing.JLabel();
+        paybale_amount = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -76,30 +82,30 @@ public class paycommission extends javax.swing.JInternalFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        jLabel1.setBackground(new java.awt.Color(0, 184, 148));
+        jLabel1.setBackground(new java.awt.Color(9, 132, 227));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Select Worker");
+        jLabel1.setText("Pay Commission");
         jLabel1.setOpaque(true);
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Name :");
+        jLabel2.setText("Amount RS :");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel3.setText("Worker :");
 
-        txt_worker_name.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txt_worker_name.addKeyListener(new java.awt.event.KeyAdapter() {
+        txt_worker_pay.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txt_worker_pay.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                txt_worker_nameKeyPressed(evt);
+                txt_worker_payKeyPressed(evt);
             }
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txt_worker_nameKeyReleased(evt);
+                txt_worker_payKeyReleased(evt);
             }
         });
 
         btn_save.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_save.setText("SAVE");
+        btn_save.setText("PAY");
         btn_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_saveActionPerformed(evt);
@@ -114,10 +120,34 @@ public class paycommission extends javax.swing.JInternalFrame {
             }
         });
 
-        worker_type.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        worker_type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Permanent", "Temporary" }));
+        worker_list.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        worker_list.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Permanent", "Temporary" }));
+        worker_list.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                worker_listActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setForeground(new java.awt.Color(51, 51, 51));
+        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jLabel5.setBackground(new java.awt.Color(0, 184, 148));
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Select Worker");
+        jLabel5.setOpaque(true);
+
+        paybale_amount.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        paybale_amount.setText("0.00");
+
+        jSeparator2.setForeground(new java.awt.Color(51, 51, 51));
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+
+        jLabel7.setBackground(new java.awt.Color(0, 184, 148));
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Payable Commission");
+        jLabel7.setOpaque(true);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -125,44 +155,71 @@ public class paycommission extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(worker_type, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(273, 273, 273)
+                        .addComponent(worker_list, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(txt_worker_name, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(94, 94, 94)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(paybale_amount, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_worker_pay, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_save)
-                        .addGap(18, 18, 18)
-                        .addComponent(btn_save1)
-                        .addGap(28, 28, 28))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_save1)))
+                .addContainerGap(30, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(594, 594, 594)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(422, Short.MAX_VALUE)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 28, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_save1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_save)
-                    .addComponent(txt_worker_name, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addGap(26, 26, 26))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(worker_list, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator1))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(paybale_amount, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 23, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(worker_type, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(txt_worker_pay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_save)
+                    .addComponent(btn_save1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGap(0, 28, Short.MAX_VALUE)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         jTable1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
@@ -171,7 +228,7 @@ public class paycommission extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Worker ID", "Name", "Type", "Added Date", "Added Time", "User"
+                "Worker ID", "Name", "Amount RS.", "Added Date", "Added Time", "User"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -190,22 +247,6 @@ public class paycommission extends javax.swing.JInternalFrame {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Payment History");
         jLabel4.setOpaque(true);
-
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton2.setText("Update Selected Item");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jButton3.setText("Delete Selected Item");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jButton4.setText("Refresh");
@@ -229,10 +270,6 @@ public class paycommission extends javax.swing.JInternalFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton4)))
                 .addContainerGap())
         );
@@ -244,61 +281,37 @@ public class paycommission extends javax.swing.JInternalFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
                 .addGap(13, 13, 13)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                .addComponent(jButton4)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txt_worker_nameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_worker_nameKeyReleased
+    private void txt_worker_payKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_worker_payKeyReleased
 
-    }//GEN-LAST:event_txt_worker_nameKeyReleased
+    }//GEN-LAST:event_txt_worker_payKeyReleased
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
 
-        if (on_update == 0) {
-            if (!worker_type.getSelectedItem().equals("") && !txt_worker_name.getText().equals("")) {
-                saveItem(txt_worker_name.getText(), worker_type.getSelectedItem().toString());
-            } else {
-                JOptionPane.showMessageDialog(this, "Emty Data ! Please Retry.");
-            }
+        if (!worker_list.getSelectedItem().equals("") && !txt_worker_pay.getText().equals("")) {
+            saveItem(txt_worker_pay.getText(), worker_list.getSelectedItem().toString());
         } else {
-            updateItem(on_update_item_id);
+            JOptionPane.showMessageDialog(this, "Emty Data ! Please Retry.");
         }
+
 
     }//GEN-LAST:event_btn_saveActionPerformed
 
-    private void txt_worker_nameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_worker_nameKeyPressed
+    private void txt_worker_payKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_worker_payKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (!txt_worker_name.getText().equals("")) {
+            if (!txt_worker_pay.getText().equals("")) {
 
             }
         }
-    }//GEN-LAST:event_txt_worker_nameKeyPressed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if (jTable1.getSelectedRow() >= 0) {
-            int option = JOptionPane.showConfirmDialog(this, "Do you want to delete this Worker ?");
-            if (option == 0) {
-                on_update_item_id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-                Transaction tr = ses.beginTransaction();
-                Workers item = (Workers) ses.load(Workers.class, on_update_item_id);
-                item.setStatus(0);
-                tr.commit();
-                clear();
-                loadDataToTable();
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(this, "Plase Select Row From Table !");
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_txt_worker_payKeyPressed
 
     private void btn_save1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_save1ActionPerformed
         clear();
@@ -306,100 +319,72 @@ public class paycommission extends javax.swing.JInternalFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         clear();
-        loadDataToTable();
+        loadWorkersToDropDown();
+
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (jTable1.getSelectedRow() >= 0) {
-            on_update_item_id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-            txt_worker_name.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
-            String type = jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString();
-            //Permanent, Temporary
-            if (type.equals("Permanent")) {
-                worker_type.setSelectedIndex(0);
-            } else {
-                worker_type.setSelectedIndex(1);
-            }
-            btn_save.setText("UPDATE");
-            txt_worker_name.grabFocus();
-            on_update = 1;
-        } else {
-            JOptionPane.showMessageDialog(this, "Plase Select Row From Table !");
-        }
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void worker_listActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_worker_listActionPerformed
+        loadWorkersData();
+    }//GEN-LAST:event_worker_listActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_save1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField txt_worker_name;
-    private javax.swing.JComboBox<String> worker_type;
+    private javax.swing.JLabel paybale_amount;
+    private javax.swing.JTextField txt_worker_pay;
+    private javax.swing.JComboBox<String> worker_list;
     // End of variables declaration//GEN-END:variables
 
-    private void updateItem(int Item_Id) {
-        try {
-            if (Item_Id > 0) {
-                Transaction tr = ses.beginTransaction();
-                Workers item = (Workers) ses.load(Workers.class, Item_Id);
-                if (!txt_worker_name.getText().equals("")) {
-                    item.setName(txt_worker_name.getText());
-                }
-                int selected_type = worker_type.getSelectedIndex();
-                if (selected_type == 0) {
-
-                    item.setType(1);
-
-                } else {
-                    item.setType(2);
-
-                }
-                tr.commit();
-                clear();
-                loadDataToTable();
-            } else {
-                JOptionPane.showMessageDialog(this, "Plase Select Row From Table !");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Plase Select Row From Table !");
-        }
-    }
-
-    private boolean saveItem(String Name, String Type) {
+    private boolean saveItem(String Amount, String Type) {
         boolean flag = false;
-        if (!Name.equals("") && !Type.equals("")) {
+        if (!Amount.equals("") && !Type.equals("")) {
             try {
                 Transaction tr = ses.beginTransaction();
-                Workers item = new Workers();
-                item.setName(Name);
-                int selected_type = worker_type.getSelectedIndex();
-                if (selected_type == 0) {
-
-                    item.setType(1);
-
-                } else {
-                    item.setType(2);
-
+                String ID = worker_list.getSelectedItem().toString().split("-")[0];
+                int worker_id = Integer.parseInt(ID);
+                Workers item = (Workers) ses.load(Workers.class, worker_id);
+                if(item != null){
+                    double amount  = Double.parseDouble(Amount);
+                    if(item.getPaybleAmount() >= amount){
+                        WorkerCommissionPay p = new WorkerCommissionPay();
+                        p.setAmount(amount);
+                        p.setPayDate(help.getDate());
+                        p.setPayTime(help.getTime());
+                        p.setStatus(1);
+                        p.setUser(user);
+                        p.setWorkers(item);
+                        ses.save(p);
+                        
+                        double curr = item.getPaybleAmount() - amount;
+                        item.setPaybleAmount(curr);
+                        ses.update(item);
+                        tr.commit();
+                        JOptionPane.showMessageDialog(this, "Data Saved !");
+                        paybale_amount.setText(df.format(item.getPaybleAmount()));
+                        clear();
+                        loadDataToTable(worker_id);
+                        
+                    }else{
+                        JOptionPane.showMessageDialog(this, "Amount is too high !");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(this, "Emty Data ! Please Retry.");
+                
                 }
-                item.setAddedDate(help.getDate());
-                item.setAddedTime(help.getTime());
-                item.setUser(user);
-                item.setStatus(1);
-                ses.save(item);
-                tr.commit();
-                JOptionPane.showMessageDialog(this, "Worker Saved !");
-                loadDataToTable();
-                clear();
+                
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(this, "Emty Data ! Please Retry.");
             }
@@ -412,38 +397,54 @@ public class paycommission extends javax.swing.JInternalFrame {
     }
 
     private void clear() {
-        btn_save.setText("SAVE");
-        txt_worker_name.setText("");
-        txt_worker_name.grabFocus();
+        btn_save.setText("PAY");
+        txt_worker_pay.setText("");
+        txt_worker_pay.grabFocus();
         on_update = 0;
         on_update_item_id = 0;
     }
 
-    private void loadDataToTable() {
-        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-        dtm.setRowCount(0);
+    private void loadWorkersToDropDown() {
+        worker_list.removeAllItems();
         Criteria cr = ses.createCriteria(Workers.class);
         cr.add(Restrictions.eq("status", 1));
         List<Workers> item_list = cr.list();
         for (Workers it : item_list) {
+            worker_list.addItem(it.getWorkersId() + "-" + it.getName());
+        }
+
+    }
+
+    private void loadWorkersData() {
+        try {
+            String ID = worker_list.getSelectedItem().toString().split("-")[0];
+            int worker_id = Integer.parseInt(ID);
+            Workers item = (Workers) ses.load(Workers.class, worker_id);
+            paybale_amount.setText(df.format(item.getPaybleAmount()));
+            loadDataToTable(worker_id);
+        } catch (Exception e) {
+        }
+
+    }
+
+    private void loadDataToTable(int id) {
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        dtm.setRowCount(0);
+        Criteria cr = ses.createCriteria(WorkerCommissionPay.class);
+        cr.add(Restrictions.eq("status", 1));
+        List<WorkerCommissionPay> item_list = cr.list();
+        for (WorkerCommissionPay it : item_list) {
+            int iid = it.getWorkers().getWorkersId();
+            if(iid == id){
             Vector v = new Vector();
-            v.add(it.getWorkersId());
-            v.add(it.getName());
-            //Permanent, Temporary
-            int selected_type = it.getType();
-            if (selected_type == 1) {
-
-                v.add("Permanent");
-
-            } else {
-                v.add("Temporary");
-
-            }
-
-            v.add(it.getAddedDate());
-            v.add(it.getAddedTime());
+            v.add(it.getWorkerCommissionPayId());
+            v.add(it.getWorkers().getName());
+            v.add(df.format(it.getAmount()));
+            v.add(it.getPayDate());
+            v.add(it.getPayTime());
             v.add(it.getUser().getName());
             dtm.addRow(v);
+            }
         }
 
     }
