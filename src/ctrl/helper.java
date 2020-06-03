@@ -7,7 +7,7 @@ package ctrl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  *
@@ -15,22 +15,16 @@ import java.util.Calendar;
  */
 public class helper {
 
+    private static DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static DateFormat datetime = new SimpleDateFormat("HH:mm:ss");
 
-    public String getDate() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar cal = Calendar.getInstance();
-        return dateFormat.format(cal.getTime());
-
+    public static String getDate() {
+        return dateFormat.format(new Date());
     }
 
-    public String getTime() {
-        DateFormat datetime = new SimpleDateFormat("HH:mm:ss");
-        Calendar cal = Calendar.getInstance();
-        return datetime.format(cal.getTime());
+    public static String getTime() {
+        return datetime.format(new Date());
 
     }
-
-
-    
 
 }
