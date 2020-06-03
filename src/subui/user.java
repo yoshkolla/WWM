@@ -16,7 +16,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import pojos.Item;
 import pojos.User;
 
 /**
@@ -29,7 +28,6 @@ public class user extends javax.swing.JInternalFrame {
      * Creates new form item
      */
     Session ses = utils.HibernateUtil.getSessionFactory().openSession();
-    helper help = new helper();
     User user = Home.getLogedUser();
 
     //variable on update
@@ -451,8 +449,8 @@ public class user extends javax.swing.JInternalFrame {
                 item.setName(Name);
                 item.setUsername(Username);
                 item.setPassword(Password);
-                item.setAddedDate(help.getDate());
-                item.setAddedTime(help.getTime());
+                item.setAddedDate(helper.getDate());
+                item.setAddedTime(helper.getTime());
                 item.setStatus(1);
                 ses.save(item);
                 tr.commit();
