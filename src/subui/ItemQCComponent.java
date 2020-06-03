@@ -10,14 +10,18 @@ package subui;
  * @author SCORFi3LD
  */
 public class ItemQCComponent extends javax.swing.JPanel {
-    
-    
+
+    public int item_id;
+
     /**
      * Creates new form ItemQCComponent
+     *
+     * @param item_id
      * @param itemName
      */
-    public ItemQCComponent(String itemName) {
+    public ItemQCComponent(int item_id, String itemName) {
         initComponents();
+        this.item_id = item_id;
         lb_title.setText(itemName);
     }
 
@@ -68,7 +72,7 @@ public class ItemQCComponent extends javax.swing.JPanel {
     private javax.swing.JLabel lb_title;
     // End of variables declaration//GEN-END:variables
 
-    public boolean isChecked(){
-       return jCheckBox1.isSelected();
+    public boolean isChecked() {
+        return jCheckBox1.isSelected();
     }
 }
