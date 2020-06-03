@@ -1,5 +1,5 @@
 package pojos;
-// Generated Jun 3, 2020 2:21:40 PM by Hibernate Tools 4.3.1
+// Generated Jun 3, 2020 6:06:27 PM by Hibernate Tools 4.3.1
 
 
 
@@ -15,7 +15,6 @@ public class SaveWadiItems  implements java.io.Serializable {
      private Integer qty;
      private Double commissionPerItem;
      private Double totalCommission;
-     private Integer rate;
      private Integer status;
 
     public SaveWadiItems() {
@@ -26,13 +25,12 @@ public class SaveWadiItems  implements java.io.Serializable {
         this.item = item;
         this.saveWadi = saveWadi;
     }
-    public SaveWadiItems(Item item, SaveWadi saveWadi, Integer qty, Double commissionPerItem, Double totalCommission, Integer rate, Integer status) {
+    public SaveWadiItems(Item item, SaveWadi saveWadi, Integer qty, Double commissionPerItem, Double totalCommission, Integer status) {
        this.item = item;
        this.saveWadi = saveWadi;
        this.qty = qty;
        this.commissionPerItem = commissionPerItem;
        this.totalCommission = totalCommission;
-       this.rate = rate;
        this.status = status;
     }
    
@@ -77,13 +75,6 @@ public class SaveWadiItems  implements java.io.Serializable {
     
     public void setTotalCommission(Double totalCommission) {
         this.totalCommission = totalCommission;
-    }
-    public Integer getRate() {
-        return this.rate;
-    }
-    
-    public void setRate(Integer rate) {
-        this.rate = rate;
     }
     public Integer getStatus() {
         return this.status;
