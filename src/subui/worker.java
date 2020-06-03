@@ -96,6 +96,7 @@ public class worker extends javax.swing.JInternalFrame {
         });
 
         btn_save.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_x24.png"))); // NOI18N
         btn_save.setText("SAVE");
         btn_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,6 +105,7 @@ public class worker extends javax.swing.JInternalFrame {
         });
 
         btn_save1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_save1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reset_x24.png"))); // NOI18N
         btn_save1.setText("CLEAR");
         btn_save1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,7 +136,7 @@ public class worker extends javax.swing.JInternalFrame {
                 .addComponent(btn_save)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_save1)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,7 +156,7 @@ public class worker extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btn_save1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                            .addComponent(btn_save1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btn_save, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(worker_type, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addGap(0, 37, Short.MAX_VALUE))
@@ -187,6 +189,7 @@ public class worker extends javax.swing.JInternalFrame {
         jLabel4.setOpaque(true);
 
         jButton2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_x24.png"))); // NOI18N
         jButton2.setText("Update Selected Item");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,6 +198,7 @@ public class worker extends javax.swing.JInternalFrame {
         });
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/delete_x24.png"))); // NOI18N
         jButton3.setText("Delete Selected Item");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,6 +207,7 @@ public class worker extends javax.swing.JInternalFrame {
         });
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh_x24.png"))); // NOI18N
         jButton4.setText("Refresh");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -227,7 +232,7 @@ public class worker extends javax.swing.JInternalFrame {
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton4)))
                 .addContainerGap())
         );
@@ -239,7 +244,7 @@ public class worker extends javax.swing.JInternalFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
