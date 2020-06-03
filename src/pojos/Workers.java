@@ -1,5 +1,5 @@
 package pojos;
-// Generated Jun 2, 2020 11:01:12 PM by Hibernate Tools 4.3.1
+// Generated Jun 3, 2020 2:21:40 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -21,6 +21,7 @@ public class Workers  implements java.io.Serializable {
      private Integer status;
      private Set saveWadiWorkers = new HashSet(0);
      private Set wadiUsers = new HashSet(0);
+     private Set workerCommissionPays = new HashSet(0);
 
     public Workers() {
     }
@@ -29,7 +30,7 @@ public class Workers  implements java.io.Serializable {
     public Workers(User user) {
         this.user = user;
     }
-    public Workers(User user, String name, String addedDate, String addedTime, Double paybleAmount, Integer type, Integer status, Set saveWadiWorkers, Set wadiUsers) {
+    public Workers(User user, String name, String addedDate, String addedTime, Double paybleAmount, Integer type, Integer status, Set saveWadiWorkers, Set wadiUsers, Set workerCommissionPays) {
        this.user = user;
        this.name = name;
        this.addedDate = addedDate;
@@ -39,6 +40,7 @@ public class Workers  implements java.io.Serializable {
        this.status = status;
        this.saveWadiWorkers = saveWadiWorkers;
        this.wadiUsers = wadiUsers;
+       this.workerCommissionPays = workerCommissionPays;
     }
    
     public Integer getWorkersId() {
@@ -111,8 +113,15 @@ public class Workers  implements java.io.Serializable {
     public void setWadiUsers(Set wadiUsers) {
         this.wadiUsers = wadiUsers;
     }
-
+    public Set getWorkerCommissionPays() {
+        return this.workerCommissionPays;
+    }
     
+    public void setWorkerCommissionPays(Set workerCommissionPays) {
+        this.workerCommissionPays = workerCommissionPays;
+    }
+
+
 
 
 }

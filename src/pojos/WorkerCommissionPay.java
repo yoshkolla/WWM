@@ -1,5 +1,5 @@
 package pojos;
-// Generated Jun 2, 2020 11:01:12 PM by Hibernate Tools 4.3.1
+// Generated Jun 3, 2020 2:21:40 PM by Hibernate Tools 4.3.1
 
 
 
@@ -11,6 +11,7 @@ public class WorkerCommissionPay  implements java.io.Serializable {
 
      private Integer workerCommissionPayId;
      private User user;
+     private Workers workers;
      private String payDate;
      private String payTime;
      private Double amount;
@@ -20,11 +21,13 @@ public class WorkerCommissionPay  implements java.io.Serializable {
     }
 
 	
-    public WorkerCommissionPay(User user) {
+    public WorkerCommissionPay(User user, Workers workers) {
         this.user = user;
+        this.workers = workers;
     }
-    public WorkerCommissionPay(User user, String payDate, String payTime, Double amount, Integer status) {
+    public WorkerCommissionPay(User user, Workers workers, String payDate, String payTime, Double amount, Integer status) {
        this.user = user;
+       this.workers = workers;
        this.payDate = payDate;
        this.payTime = payTime;
        this.amount = amount;
@@ -44,6 +47,13 @@ public class WorkerCommissionPay  implements java.io.Serializable {
     
     public void setUser(User user) {
         this.user = user;
+    }
+    public Workers getWorkers() {
+        return this.workers;
+    }
+    
+    public void setWorkers(Workers workers) {
+        this.workers = workers;
     }
     public String getPayDate() {
         return this.payDate;
