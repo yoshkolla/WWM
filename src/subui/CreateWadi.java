@@ -6,13 +6,22 @@
 package subui;
 
 import com.sun.java.swing.plaf.windows.WindowsTabbedPaneUI;
+import ctrl.helper;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.util.List;
 import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import mainui.Home;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import pojos.Item;
+import pojos.SaveWadi;
+import pojos.SaveWadiItems;
+import pojos.SaveWadiWorker;
 import pojos.Wadi;
 import pojos.WadiUser;
 import pojos.Workers;
@@ -65,33 +74,37 @@ public class CreateWadi extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         btn_next1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tbl_wadi = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         btn_next2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnAddWorker = new javax.swing.JButton();
+        btnRemoveWorker = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
         tbl_wadi_workers = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        tbl_all_worker = new javax.swing.JTable();
+        tbl_all_workers = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         btn_next3 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
+        btnAddItems = new javax.swing.JButton();
+        btnRemoveItems = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tbl_wadi_items = new javax.swing.JTable();
         jScrollPane8 = new javax.swing.JScrollPane();
-        jTable5 = new javax.swing.JTable();
+        tbl_all_items = new javax.swing.JTable();
         jPanel4 = new javax.swing.JPanel();
         btn_next4 = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         jPanel_qc = new javax.swing.JPanel();
-        jButton9 = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         btn_finish = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tbl_item_summary = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tbl_worker_summary = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        lb_title = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create Wadi Details");
@@ -107,8 +120,8 @@ public class CreateWadi extends javax.swing.JDialog {
             }
         });
 
-        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_wadi.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        tbl_wadi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -124,15 +137,20 @@ public class CreateWadi extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(25);
-        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTable1.getTableHeader().setReorderingAllowed(false);
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl_wadi.setRowHeight(20);
+        tbl_wadi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        tbl_wadi.getTableHeader().setReorderingAllowed(false);
+        tbl_wadi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                jTable1MouseReleased(evt);
+                tbl_wadiMouseReleased(evt);
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tbl_wadi);
+        if (tbl_wadi.getColumnModel().getColumnCount() > 0) {
+            tbl_wadi.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_wadi.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_wadi.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,22 +179,28 @@ public class CreateWadi extends javax.swing.JDialog {
 
         btn_next2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_next2.setText("Next");
+        btn_next2.setEnabled(false);
         btn_next2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_next2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText(">");
-        jButton3.setEnabled(false);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnAddWorker.setText(">");
+        btnAddWorker.setEnabled(false);
+        btnAddWorker.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnAddWorkerActionPerformed(evt);
             }
         });
 
-        jButton4.setText("<");
-        jButton4.setEnabled(false);
+        btnRemoveWorker.setText("<");
+        btnRemoveWorker.setEnabled(false);
+        btnRemoveWorker.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveWorkerActionPerformed(evt);
+            }
+        });
 
         tbl_wadi_workers.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         tbl_wadi_workers.setModel(new javax.swing.table.DefaultTableModel(
@@ -204,9 +228,14 @@ public class CreateWadi extends javax.swing.JDialog {
             }
         });
         jScrollPane7.setViewportView(tbl_wadi_workers);
+        if (tbl_wadi_workers.getColumnModel().getColumnCount() > 0) {
+            tbl_wadi_workers.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_wadi_workers.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_wadi_workers.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
 
-        tbl_all_worker.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        tbl_all_worker.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_all_workers.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        tbl_all_workers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -222,32 +251,38 @@ public class CreateWadi extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tbl_all_worker.setRowHeight(20);
-        tbl_all_worker.setShowHorizontalLines(false);
-        tbl_all_worker.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl_all_workers.setRowHeight(20);
+        tbl_all_workers.setShowHorizontalLines(false);
+        tbl_all_workers.getTableHeader().setReorderingAllowed(false);
+        tbl_all_workers.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tbl_all_workerMouseReleased(evt);
+                tbl_all_workersMouseReleased(evt);
             }
         });
-        jScrollPane3.setViewportView(tbl_all_worker);
+        jScrollPane3.setViewportView(tbl_all_workers);
+        if (tbl_all_workers.getColumnModel().getColumnCount() > 0) {
+            tbl_all_workers.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_all_workers.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_all_workers.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnAddWorker, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRemoveWorker, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
                         .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_next2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -263,9 +298,9 @@ public class CreateWadi extends javax.swing.JDialog {
                     .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(155, 155, 155)
-                        .addComponent(jButton3)
+                        .addComponent(btnAddWorker)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4)
+                        .addComponent(btnRemoveWorker)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_next2)
@@ -276,23 +311,71 @@ public class CreateWadi extends javax.swing.JDialog {
 
         btn_next3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_next3.setText("Next");
+        btn_next3.setEnabled(false);
         btn_next3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_next3ActionPerformed(evt);
             }
         });
 
-        jButton5.setText(">");
+        btnAddItems.setText(">");
+        btnAddItems.setEnabled(false);
+        btnAddItems.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddItemsActionPerformed(evt);
+            }
+        });
 
-        jButton8.setText("<");
+        btnRemoveItems.setText("<");
+        btnRemoveItems.setEnabled(false);
+        btnRemoveItems.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveItemsActionPerformed(evt);
+            }
+        });
 
-        jTable2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_wadi_items.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        tbl_wadi_items.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Item Name", "Qty"
+                "id", "Item Name", "Qty"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_wadi_items.setRowHeight(20);
+        tbl_wadi_items.setShowHorizontalLines(false);
+        tbl_wadi_items.getTableHeader().setReorderingAllowed(false);
+        tbl_wadi_items.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbl_wadi_itemsMouseReleased(evt);
+            }
+        });
+        jScrollPane6.setViewportView(tbl_wadi_items);
+        if (tbl_wadi_items.getColumnModel().getColumnCount() > 0) {
+            tbl_wadi_items.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_wadi_items.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_wadi_items.getColumnModel().getColumn(0).setMaxWidth(0);
+            tbl_wadi_items.getColumnModel().getColumn(2).setMinWidth(45);
+            tbl_wadi_items.getColumnModel().getColumn(2).setPreferredWidth(50);
+            tbl_wadi_items.getColumnModel().getColumn(2).setMaxWidth(55);
+        }
+
+        tbl_all_items.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        tbl_all_items.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "id", "Item Name"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -303,31 +386,20 @@ public class CreateWadi extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jTable2.setRowHeight(20);
-        jScrollPane6.setViewportView(jTable2);
-        if (jTable2.getColumnModel().getColumnCount() > 0) {
-            jTable2.getColumnModel().getColumn(1).setMinWidth(45);
-            jTable2.getColumnModel().getColumn(1).setPreferredWidth(50);
-            jTable2.getColumnModel().getColumn(1).setMaxWidth(55);
-        }
-
-        jTable5.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Item Name"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        tbl_all_items.setRowHeight(20);
+        tbl_all_items.setShowHorizontalLines(false);
+        tbl_all_items.getTableHeader().setReorderingAllowed(false);
+        tbl_all_items.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbl_all_itemsMouseReleased(evt);
             }
         });
-        jScrollPane8.setViewportView(jTable5);
+        jScrollPane8.setViewportView(tbl_all_items);
+        if (tbl_all_items.getColumnModel().getColumnCount() > 0) {
+            tbl_all_items.getColumnModel().getColumn(0).setMinWidth(0);
+            tbl_all_items.getColumnModel().getColumn(0).setPreferredWidth(0);
+            tbl_all_items.getColumnModel().getColumn(0).setMaxWidth(0);
+        }
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -340,8 +412,8 @@ public class CreateWadi extends javax.swing.JDialog {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnAddItems, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnRemoveItems, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -355,19 +427,20 @@ public class CreateWadi extends javax.swing.JDialog {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(166, 166, 166)
-                .addComponent(jButton5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton8)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(166, 166, 166)
+                        .addComponent(btnAddItems)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnRemoveItems))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btn_next3)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane8, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_next3)
-                .addContainerGap())
         );
 
         jTabbedPane.addTab("tab3", jPanel3);
@@ -383,13 +456,6 @@ public class CreateWadi extends javax.swing.JDialog {
         jPanel_qc.setLayout(new java.awt.GridLayout(0, 1));
         jScrollPane5.setViewportView(jPanel_qc);
 
-        jButton9.setText("Ckeck");
-        jButton9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton9ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -398,8 +464,7 @@ public class CreateWadi extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jButton9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
+                        .addGap(0, 360, Short.MAX_VALUE)
                         .addComponent(btn_next4, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane5))
                 .addContainerGap())
@@ -408,11 +473,9 @@ public class CreateWadi extends javax.swing.JDialog {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane5)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_next4)
-                    .addComponent(jButton9))
+                .addComponent(btn_next4)
                 .addContainerGap())
         );
 
@@ -426,9 +489,53 @@ public class CreateWadi extends javax.swing.JDialog {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("5");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel1.setText("Item Summary");
+
+        tbl_item_summary.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tbl_item_summary.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Item Name", "Qty", "QC Pass"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_item_summary.setShowHorizontalLines(false);
+        tbl_item_summary.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tbl_item_summary);
+
+        tbl_worker_summary.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tbl_worker_summary.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Worker Name", "Commission"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tbl_worker_summary.setShowHorizontalLines(false);
+        tbl_worker_summary.getTableHeader().setReorderingAllowed(false);
+        jScrollPane4.setViewportView(tbl_worker_summary);
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setText("Worker Summary");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -437,18 +544,28 @@ public class CreateWadi extends javax.swing.JDialog {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 360, Short.MAX_VALUE)
-                        .addComponent(btn_finish, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_finish, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
+                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 298, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_finish)
                 .addContainerGap())
         );
@@ -457,9 +574,9 @@ public class CreateWadi extends javax.swing.JDialog {
 
         jPanel6.setBackground(new java.awt.Color(51, 153, 255));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Title Here");
+        lb_title.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lb_title.setForeground(new java.awt.Color(255, 255, 255));
+        lb_title.setText("Select the Wadi");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -467,14 +584,14 @@ public class CreateWadi extends javax.swing.JDialog {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lb_title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lb_title, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -504,77 +621,233 @@ public class CreateWadi extends javax.swing.JDialog {
     private void btn_next1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_next1ActionPerformed
 
         jTabbedPane.setSelectedIndex(1);
-        int id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+        lb_title.setText("Select the Workers");
+        int id = Integer.parseInt(tbl_wadi.getValueAt(tbl_wadi.getSelectedRow(), 0).toString());
         loadWadiWorkers(id);
+        if (isWorkersAdded()) {
+            btn_next2.setEnabled(true);
+        } else {
+            btn_next2.setEnabled(false);
+        }
     }//GEN-LAST:event_btn_next1ActionPerformed
 
     private void btn_next2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_next2ActionPerformed
 
         jTabbedPane.setSelectedIndex(2);
+        lb_title.setText("Select the Items");
+        loadItems();
     }//GEN-LAST:event_btn_next2ActionPerformed
 
     private void btn_next3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_next3ActionPerformed
 
         jTabbedPane.setSelectedIndex(3);
+        lb_title.setText("Quality Check");
+        loadItemQc();
     }//GEN-LAST:event_btn_next3ActionPerformed
 
     private void btn_next4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_next4ActionPerformed
 
         jTabbedPane.setSelectedIndex(4);
+        lb_title.setText("Finalize");
+        loadSummary();
     }//GEN-LAST:event_btn_next4ActionPerformed
 
     private void btn_finishActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_finishActionPerformed
 
+        Session s = Connection.getConnection();
+        Transaction tr = s.beginTransaction();
 
+        Wadi wadi = (Wadi) s.load(Wadi.class, Integer.parseInt(tbl_wadi.getValueAt(tbl_wadi.getSelectedRow(), 0).toString()));
+
+        SaveWadi sw = new SaveWadi();
+        sw.setWadi(wadi);
+        sw.setSavedDate(helper.getDate());
+        sw.setSavedTime(helper.getTime());
+        sw.setUser(Home.getLogedUser());
+        sw.setStatus(1);
+        s.save(sw);
+
+        List<WadiUser> wulist = s.createCriteria(WadiUser.class).add(Restrictions.eq("wadi", wadi)).list();
+        for (WadiUser wu : wulist) {
+            s.delete(wu);
+        }
+
+        double totalComm = 0;
+
+        DefaultTableModel wadiitems = (DefaultTableModel) tbl_wadi_items.getModel();
+        for (int i = 0; i < wadiitems.getRowCount(); i++) {
+
+            Item item = (Item) s.load(Item.class, Integer.parseInt(wadiitems.getValueAt(i, 0).toString()));
+            int qty = Integer.parseInt(wadiitems.getValueAt(i, 2).toString());
+
+            SaveWadiItems wi = new SaveWadiItems();
+            wi.setSaveWadi(sw);
+            wi.setItem(item);
+            wi.setQty(qty);
+            if (isItemQCPass(item.getItemId())) {
+                totalComm += (qty * item.getCommission());
+                wi.setCommissionPerItem(item.getCommission());
+                wi.setTotalCommission(qty * item.getCommission());
+            }
+            wi.setStatus(1);
+            s.save(wi);
+        }
+
+        DefaultTableModel wadiworkers = (DefaultTableModel) tbl_wadi_workers.getModel();
+        for (int i = 0; i < wadiworkers.getRowCount(); i++) {
+            Workers workers = (Workers) s.load(Workers.class, Integer.parseInt(wadiworkers.getValueAt(i, 0).toString()));
+            workers.setPaybleAmount(totalComm / wadiworkers.getRowCount());
+
+            SaveWadiWorker ww = new SaveWadiWorker();
+            ww.setSaveWadi(sw);
+            ww.setWorkers(workers);
+            ww.setStatus(1);
+            s.save(ww);
+
+            WadiUser wu = new WadiUser();
+            wu.setWadi(wadi);
+            wu.setWorkers(workers);
+            wu.setStatus(1);
+            s.save(wu);
+        }
+        tr.commit();
+        JOptionPane.showMessageDialog(rootPane, "Successfully Wadi Details Added!");
+        this.dispose();
     }//GEN-LAST:event_btn_finishActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+    private void tbl_wadiMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_wadiMouseReleased
 
-        Component[] c = jPanel_qc.getComponents();
-        for (Component component : c) {
-            if (component instanceof ItemQCComponent) {
-                System.out.println(((ItemQCComponent) component).isChecked());
-            }
-        }
-    }//GEN-LAST:event_jButton9ActionPerformed
-
-    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
-
-        if (jTable1.isRowSelected(jTable1.getSelectedRow())) {
+        if (tbl_wadi.isRowSelected(tbl_wadi.getSelectedRow())) {
             btn_next1.setEnabled(true);
         } else {
             btn_next1.setEnabled(false);
         }
-    }//GEN-LAST:event_jTable1MouseReleased
+    }//GEN-LAST:event_tbl_wadiMouseReleased
 
-    private void tbl_all_workerMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_all_workerMouseReleased
+    private void tbl_all_workersMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_all_workersMouseReleased
 
-        if (tbl_all_worker.isRowSelected(tbl_all_worker.getSelectedRow())) {
-            jButton3.setEnabled(true);
+        if (tbl_all_workers.isRowSelected(tbl_all_workers.getSelectedRow())) {
+            btnAddWorker.setEnabled(true);
         }
-    }//GEN-LAST:event_tbl_all_workerMouseReleased
+    }//GEN-LAST:event_tbl_all_workersMouseReleased
 
     private void tbl_wadi_workersMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_wadi_workersMouseReleased
 
         if (tbl_wadi_workers.isRowSelected(tbl_wadi_workers.getSelectedRow())) {
-            jButton4.setEnabled(true);
+            btnRemoveWorker.setEnabled(true);
         }
     }//GEN-LAST:event_tbl_wadi_workersMouseReleased
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnAddWorkerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddWorkerActionPerformed
 
-        String id = tbl_all_worker.getValueAt(tbl_all_worker.getSelectedRow(), 0).toString();
-        String val = tbl_all_worker.getValueAt(tbl_all_worker.getSelectedRow(), 1).toString();
+        String id = tbl_all_workers.getValueAt(tbl_all_workers.getSelectedRow(), 0).toString();
+        String val = tbl_all_workers.getValueAt(tbl_all_workers.getSelectedRow(), 1).toString();
 
-        DefaultTableModel dtm = (DefaultTableModel) tbl_all_worker.getModel();
-        dtm.removeRow(tbl_all_worker.getSelectedRow());
-        
+        DefaultTableModel dtm = (DefaultTableModel) tbl_all_workers.getModel();
+        dtm.removeRow(tbl_all_workers.getSelectedRow());
+
         DefaultTableModel dtm1 = (DefaultTableModel) tbl_wadi_workers.getModel();
         Vector v = new Vector();
         v.add(id);
         v.add(val);
         dtm1.addRow(v);
-    }//GEN-LAST:event_jButton3ActionPerformed
+        btnAddWorker.setEnabled(false);
+        if (isWorkersAdded()) {
+            btn_next2.setEnabled(true);
+        } else {
+            btn_next2.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnAddWorkerActionPerformed
+
+    private void btnRemoveWorkerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveWorkerActionPerformed
+
+        String id = tbl_wadi_workers.getValueAt(tbl_wadi_workers.getSelectedRow(), 0).toString();
+        String val = tbl_wadi_workers.getValueAt(tbl_wadi_workers.getSelectedRow(), 1).toString();
+
+        DefaultTableModel dtm = (DefaultTableModel) tbl_wadi_workers.getModel();
+        dtm.removeRow(tbl_wadi_workers.getSelectedRow());
+
+        DefaultTableModel dtm1 = (DefaultTableModel) tbl_all_workers.getModel();
+        Vector v = new Vector();
+        v.add(id);
+        v.add(val);
+        dtm1.addRow(v);
+        btnRemoveWorker.setEnabled(false);
+        if (isWorkersAdded()) {
+            btn_next2.setEnabled(true);
+        } else {
+            btn_next2.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnRemoveWorkerActionPerformed
+
+    private void tbl_all_itemsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_all_itemsMouseReleased
+
+        if (tbl_all_items.isRowSelected(tbl_all_items.getSelectedRow())) {
+            btnAddItems.setEnabled(true);
+        }
+    }//GEN-LAST:event_tbl_all_itemsMouseReleased
+
+    private void tbl_wadi_itemsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_wadi_itemsMouseReleased
+
+        if (tbl_wadi_items.isRowSelected(tbl_wadi_items.getSelectedRow())) {
+            btnRemoveItems.setEnabled(true);
+        }
+    }//GEN-LAST:event_tbl_wadi_itemsMouseReleased
+
+    private void btnAddItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemsActionPerformed
+
+        int selectedRow = tbl_all_items.getSelectedRow();
+        AddItemQtyDialog dialog = new AddItemQtyDialog(null, true);
+        dialog.setVisible(true);
+        if (dialog.done) {
+            DefaultTableModel dtm = (DefaultTableModel) tbl_wadi_items.getModel();
+            if (dtm.getRowCount() != 0) {
+                boolean exist = false;
+                int existrow = 0;
+                for (int i = 0; i < dtm.getRowCount(); i++) {
+                    if (dtm.getValueAt(i, 0) == tbl_all_items.getValueAt(selectedRow, 0)) {
+                        exist = true;
+                        existrow = i;
+                        break;
+                    }
+                }
+
+                if (exist) {
+                    int aqty = Integer.parseInt(dtm.getValueAt(existrow, 2).toString());
+                    dtm.setValueAt((aqty + dialog.qty), existrow, 2);
+                } else {
+                    Vector v = new Vector();
+                    v.add(tbl_all_items.getValueAt(selectedRow, 0));
+                    v.add(tbl_all_items.getValueAt(selectedRow, 1));
+                    v.add(dialog.qty);
+                    dtm.addRow(v);
+                }
+            } else {
+                Vector v = new Vector();
+                v.add(tbl_all_items.getValueAt(selectedRow, 0));
+                v.add(tbl_all_items.getValueAt(selectedRow, 1));
+                v.add(dialog.qty);
+                dtm.addRow(v);
+            }
+            if (isItemsAdded()) {
+                btn_next3.setEnabled(true);
+            } else {
+                btn_next3.setEnabled(false);
+            }
+        }
+    }//GEN-LAST:event_btnAddItemsActionPerformed
+
+    private void btnRemoveItemsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveItemsActionPerformed
+
+        int selectedRow = tbl_wadi_items.getSelectedRow();
+        DefaultTableModel dtm = (DefaultTableModel) tbl_wadi_items.getModel();
+        dtm.removeRow(selectedRow);
+        if (isItemsAdded()) {
+            btn_next3.setEnabled(true);
+        } else {
+            btn_next3.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnRemoveItemsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -619,18 +892,17 @@ public class CreateWadi extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddItems;
+    private javax.swing.JButton btnAddWorker;
+    private javax.swing.JButton btnRemoveItems;
+    private javax.swing.JButton btnRemoveWorker;
     private javax.swing.JButton btn_finish;
     private javax.swing.JButton btn_next1;
     private javax.swing.JButton btn_next2;
     private javax.swing.JButton btn_next3;
     private javax.swing.JButton btn_next4;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -639,23 +911,28 @@ public class CreateWadi extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel_qc;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JTabbedPane jTabbedPane;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTable jTable5;
-    private javax.swing.JTable tbl_all_worker;
+    private javax.swing.JLabel lb_title;
+    private javax.swing.JTable tbl_all_items;
+    private javax.swing.JTable tbl_all_workers;
+    private javax.swing.JTable tbl_item_summary;
+    private javax.swing.JTable tbl_wadi;
+    private javax.swing.JTable tbl_wadi_items;
     private javax.swing.JTable tbl_wadi_workers;
+    private javax.swing.JTable tbl_worker_summary;
     // End of variables declaration//GEN-END:variables
 
     private void loadWadiDetails() {
         Session s = Connection.getConnection();
         List<Wadi> wList = s.createCriteria(Wadi.class).add(Restrictions.eq("status", 1)).list();
-        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        DefaultTableModel dtm = (DefaultTableModel) tbl_wadi.getModel();
         for (Wadi wadi : wList) {
             Vector v = new Vector();
             v.add(wadi.getWadiId());
@@ -679,8 +956,8 @@ public class CreateWadi extends javax.swing.JDialog {
             v1.add(wu.getWorkers());
         }
         v.removeAll(v1);
-        
-        DefaultTableModel dtm = (DefaultTableModel) tbl_all_worker.getModel();
+
+        DefaultTableModel dtm = (DefaultTableModel) tbl_all_workers.getModel();
         dtm.setRowCount(0);
         for (Workers w : v) {
             Vector vs = new Vector();
@@ -688,7 +965,7 @@ public class CreateWadi extends javax.swing.JDialog {
             vs.add(w.getName());
             dtm.addRow(vs);
         }
-        
+
         DefaultTableModel dtm1 = (DefaultTableModel) tbl_wadi_workers.getModel();
         dtm1.setRowCount(0);
         for (Workers w : v1) {
@@ -697,5 +974,91 @@ public class CreateWadi extends javax.swing.JDialog {
             vs.add(w.getName());
             dtm1.addRow(vs);
         }
+    }
+
+    private boolean isWorkersAdded() {
+        return tbl_wadi_workers.getRowCount() != 0;
+    }
+
+    private boolean isItemsAdded() {
+        return tbl_wadi_items.getRowCount() != 0;
+    }
+
+    private void loadItems() {
+        Session s = Connection.getConnection();
+        DefaultTableModel dtm = (DefaultTableModel) tbl_all_items.getModel();
+        List<Item> iList = s.createCriteria(Item.class).add(Restrictions.eq("status", 1)).list();
+        for (Item i : iList) {
+            Vector v = new Vector();
+            v.add(i.getItemId());
+            v.add(i.getName());
+            dtm.addRow(v);
+        }
+    }
+
+    private void loadItemQc() {
+        DefaultTableModel dtm = (DefaultTableModel) tbl_wadi_items.getModel();
+        for (int i = 0; i < dtm.getRowCount(); i++) {
+            int id = Integer.parseInt(dtm.getValueAt(i, 0).toString());
+            String name = dtm.getValueAt(i, 1).toString();
+            jPanel_qc.add(new ItemQCComponent(id, name));
+        }
+        int rest = 0;
+        if (dtm.getRowCount() < 6) {
+            rest = 6 - dtm.getRowCount();
+        }
+
+        for (int i = 0; i < rest; i++) {
+            JPanel pan = new JPanel();
+            pan.setSize(jPanel_qc.getWidth(), 64);
+            jPanel_qc.add(pan);
+        }
+    }
+
+    double comm;
+
+    private void loadSummary() {
+        Session s = Connection.getConnection();
+
+        DefaultTableModel items = (DefaultTableModel) tbl_wadi_items.getModel();
+        DefaultTableModel item_summary = (DefaultTableModel) tbl_item_summary.getModel();
+        for (int i = 0; i < items.getRowCount(); i++) {
+            int id = Integer.parseInt(items.getValueAt(i, 0).toString());
+            String name = items.getValueAt(i, 1).toString();
+            double qty = Double.parseDouble(items.getValueAt(i, 2).toString());
+            Vector v = new Vector();
+            v.add(name);
+            v.add(qty);
+            v.add(isItemQCPass(id) ? "Pass" : "Fail");
+            item_summary.addRow(v);
+
+            if (isItemQCPass(id)) {
+                Item it = (Item) s.load(Item.class, id);
+                comm += (qty * it.getCommission());
+            }
+
+        }
+
+        DefaultTableModel workers = (DefaultTableModel) tbl_wadi_workers.getModel();
+        DefaultTableModel worker_summary = (DefaultTableModel) tbl_worker_summary.getModel();
+        for (int i = 0; i < workers.getRowCount(); i++) {
+            Vector v = new Vector();
+            v.add(workers.getValueAt(i, 1));
+            v.add(comm / workers.getRowCount());
+            worker_summary.addRow(v);
+        }
+    }
+
+    private boolean isItemQCPass(int id) {
+        Component[] cs = jPanel_qc.getComponents();
+        for (Component c : cs) {
+            if (c instanceof ItemQCComponent) {
+                ItemQCComponent ic = (ItemQCComponent) c;
+                if (ic.item_id == id) {
+                    return ic.isChecked();
+                }
+            }
+        }
+        return false;
     }
 }
