@@ -16,6 +16,7 @@ import pojos.User;
 import subui.CreateWadi;
 import subui.item;
 import subui.paycommission;
+import subui.report;
 import subui.user;
 import subui.wadi;
 import subui.worker;
@@ -147,6 +148,11 @@ public class Home extends javax.swing.JFrame {
 
         jButton7.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         jButton7.setText("Commission Report");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(153, 153, 0));
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -452,6 +458,16 @@ public class Home extends javax.swing.JFrame {
 
         new CreateWadi(this, true).setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        try {
+            JInternalFrame frame = new report();
+            FrameContainer.add(frame).setVisible(true);
+            frame.setMaximum(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
