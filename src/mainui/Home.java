@@ -7,6 +7,7 @@ package mainui;
 
 import java.awt.Graphics;
 import java.awt.Image;
+import java.beans.PropertyVetoException;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -16,6 +17,7 @@ import pojos.User;
 import subui.CreateWadi;
 import subui.item;
 import subui.paycommission;
+import subui.report;
 import subui.user;
 import subui.wadi;
 import subui.worker;
@@ -168,6 +170,11 @@ public class Home extends javax.swing.JFrame {
         jButton7.setText("Production Report");
         jButton7.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton7.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(153, 153, 0));
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -361,6 +368,7 @@ public class Home extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
 
         try {
+            minimizeOtherFrames();
             JInternalFrame frame = new item();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
@@ -370,7 +378,9 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        
         try {
+            minimizeOtherFrames();
             JInternalFrame frame = new wadi();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
@@ -380,7 +390,9 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        
         try {
+            minimizeOtherFrames();
             JInternalFrame frame = new worker();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
@@ -391,6 +403,7 @@ public class Home extends javax.swing.JFrame {
 
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         try {
+            minimizeOtherFrames();
             JInternalFrame frame = new user();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
@@ -401,6 +414,7 @@ public class Home extends javax.swing.JFrame {
 
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
         try {
+            minimizeOtherFrames();
             JInternalFrame frame = new paycommission();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
@@ -417,6 +431,7 @@ public class Home extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
         try {
+            minimizeOtherFrames();
             JInternalFrame frame = new item();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
@@ -428,6 +443,7 @@ public class Home extends javax.swing.JFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         try {
+            minimizeOtherFrames();
             JInternalFrame frame = new wadi();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
@@ -439,6 +455,7 @@ public class Home extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
 
         try {
+            minimizeOtherFrames();
             JInternalFrame frame = new worker();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
@@ -450,6 +467,7 @@ public class Home extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
         try {
+            minimizeOtherFrames();
             JInternalFrame frame = new user();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
@@ -461,6 +479,7 @@ public class Home extends javax.swing.JFrame {
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
 
         try {
+            minimizeOtherFrames();
             JInternalFrame frame = new paycommission();
             FrameContainer.add(frame).setVisible(true);
             frame.setMaximum(true);
@@ -473,6 +492,18 @@ public class Home extends javax.swing.JFrame {
 
         new CreateWadi(this, true).setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+
+        try {
+            minimizeOtherFrames();
+            JInternalFrame frame = new report();
+            FrameContainer.add(frame).setVisible(true);
+            frame.setMaximum(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -536,10 +567,14 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel lb_user;
     // End of variables declaration//GEN-END:variables
 
-    private void removeOtherFrames() {
+    private void minimizeOtherFrames() {
         JInternalFrame[] allFrames = FrameContainer.getAllFrames();
         for (JInternalFrame frame : allFrames) {
-            frame.dispose();
+            try {
+                frame.setIcon(true);
+            } catch (PropertyVetoException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
