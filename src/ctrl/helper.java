@@ -7,6 +7,7 @@ package ctrl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -24,7 +25,10 @@ public class helper {
 
     public static String getTime() {
         return datetime.format(new Date());
-
+    }
+    
+    public static String getDate(Calendar d){
+        return dateFormat.format(d.getTime());
     }
 
 }
