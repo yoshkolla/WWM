@@ -105,6 +105,7 @@ public class paycommission extends javax.swing.JInternalFrame {
         });
 
         btn_save.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_save.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_x24.png"))); // NOI18N
         btn_save.setText("PAY");
         btn_save.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +114,7 @@ public class paycommission extends javax.swing.JInternalFrame {
         });
 
         btn_save1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btn_save1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reset_x24.png"))); // NOI18N
         btn_save1.setText("CLEAR");
         btn_save1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -179,7 +181,7 @@ public class paycommission extends javax.swing.JInternalFrame {
                         .addComponent(btn_save)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_save1)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(594, 594, 594)
@@ -249,6 +251,7 @@ public class paycommission extends javax.swing.JInternalFrame {
         jLabel4.setOpaque(true);
 
         jButton4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh_x24.png"))); // NOI18N
         jButton4.setText("Refresh");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -281,7 +284,7 @@ public class paycommission extends javax.swing.JInternalFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
                 .addGap(13, 13, 13)
                 .addComponent(jButton4)
                 .addContainerGap())
