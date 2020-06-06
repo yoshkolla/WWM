@@ -344,7 +344,12 @@ public class Home extends javax.swing.JFrame {
         jMenu1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
         jMenuItem6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jMenuItem6.setText("Commission Report");
+        jMenuItem6.setText("Production Report");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem6);
 
         jMenuBar1.add(jMenu1);
@@ -378,7 +383,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        
+
         try {
             minimizeOtherFrames();
             JInternalFrame frame = new wadi();
@@ -390,7 +395,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        
+
         try {
             minimizeOtherFrames();
             JInternalFrame frame = new worker();
@@ -504,6 +509,18 @@ public class Home extends javax.swing.JFrame {
             ex.printStackTrace();
         }
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+
+        try {
+            minimizeOtherFrames();
+            JInternalFrame frame = new report();
+            FrameContainer.add(frame).setVisible(true);
+            frame.setMaximum(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
      * @param args the command line arguments
