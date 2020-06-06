@@ -1,5 +1,5 @@
 package pojos;
-// Generated Jun 3, 2020 6:06:27 PM by Hibernate Tools 4.3.1
+// Generated Jun 7, 2020 12:18:51 AM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -15,6 +15,7 @@ public class Item  implements java.io.Serializable {
      private User user;
      private String name;
      private Double commission;
+     private Double price;
      private String addedDate;
      private String addedTime;
      private Integer status;
@@ -28,10 +29,11 @@ public class Item  implements java.io.Serializable {
     public Item(User user) {
         this.user = user;
     }
-    public Item(User user, String name, Double commission, String addedDate, String addedTime, Integer status, Set wadiItemses, Set saveWadiItemses) {
+    public Item(User user, String name, Double commission, Double price, String addedDate, String addedTime, Integer status, Set wadiItemses, Set saveWadiItemses) {
        this.user = user;
        this.name = name;
        this.commission = commission;
+       this.price = price;
        this.addedDate = addedDate;
        this.addedTime = addedTime;
        this.status = status;
@@ -66,6 +68,13 @@ public class Item  implements java.io.Serializable {
     
     public void setCommission(Double commission) {
         this.commission = commission;
+    }
+    public Double getPrice() {
+        return this.price;
+    }
+    
+    public void setPrice(Double price) {
+        this.price = price;
     }
     public String getAddedDate() {
         return this.addedDate;
