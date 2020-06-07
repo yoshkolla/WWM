@@ -24,7 +24,7 @@ import utils.Connection;
 
 /**
  *
- * @author Mayura Lakshan
+ * @author SCORFi3LD
  */
 public class report extends javax.swing.JInternalFrame {
 
@@ -84,7 +84,7 @@ public class report extends javax.swing.JInternalFrame {
         jLabel5.setBackground(new java.awt.Color(0, 184, 148));
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Search Items");
+        jLabel5.setText(" Search Items");
         jLabel5.setOpaque(true);
 
         dc_from.setCalendarPreferredSize(new java.awt.Dimension(300, 200));
