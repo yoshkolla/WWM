@@ -342,7 +342,7 @@ public class ReturnItems extends javax.swing.JInternalFrame {
 
         Session s = Connection.getConnection();
         Wadi w = (Wadi) s.load(Wadi.class, Integer.parseInt(tbl_wadi.getValueAt(tbl_wadi.getSelectedRow(), 0).toString()));
-        List<SaveWadiItems> wiList = s.createCriteria(SaveWadiItems.class).add(Restrictions.eq("wadi", w)).list();
+        List<SaveWadiItems> wiList = s.createCriteria(SaveWadiItems.class).add(Restrictions.eq("saveWadi", w)).list();
 
         DefaultTableModel dtm = (DefaultTableModel) tbl_all_items.getModel();
         dtm.setRowCount(0);
@@ -438,7 +438,7 @@ public class ReturnItems extends javax.swing.JInternalFrame {
         Session s = Connection.getConnection();
         Transaction tr = s.beginTransaction();
 
-        Wadi w = (Wadi) s.load(Wadi.class, tbl_wadi.getValueAt(tbl_wadi.getSelectedRow(), 0).toString());
+        Wadi w = (Wadi) s.load(Wadi.class, Integer.parseInt(tbl_wadi.getValueAt(tbl_wadi.getSelectedRow(), 0).toString()));
 
         DefaultTableModel dtm_return = (DefaultTableModel) tbl_return_items.getModel();
         for (int i = 0; i < dtm_return.getRowCount(); i++) {
