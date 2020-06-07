@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
+import org.hibernate.Session;
 import pojos.User;
 import subui.CreateWadi;
 import subui.ReturnItems;
@@ -22,6 +23,7 @@ import subui.report;
 import subui.user;
 import subui.wadi;
 import subui.worker;
+import utils.Connection;
 
 /**
  *
@@ -564,7 +566,7 @@ public class Home extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -584,7 +586,9 @@ public class Home extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                //new Home().setVisible(true);
+                Session s = Connection.getConnection();
+                User u = (User) s.load(User.class, 1);
+                new Home(u).setVisible(true);
             }
         });
     }
