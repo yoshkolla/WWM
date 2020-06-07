@@ -554,85 +554,72 @@ public class paycommission extends javax.swing.JInternalFrame {
     }
 
     private void loadDataToTable(int id) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
-                dtm.setRowCount(0);
-                Criteria cr = ses.createCriteria(WorkerCommissionPay.class);
-                cr.add(Restrictions.eq("status", 1));
-                List<WorkerCommissionPay> item_list = cr.list();
-                Collections.reverse(item_list);
-                for (WorkerCommissionPay it : item_list) {
-                    int iid = it.getWorkers().getWorkersId();
-                    if (iid == id) {
-                        Vector v = new Vector();
-                        v.add(it.getWorkerCommissionPayId());
-                        v.add(it.getWorkers().getName());
-                        v.add(df.format(it.getAmount()));
-                        v.add(it.getPayDate());
-                        v.add(it.getPayTime());
-                        v.add(it.getUser().getName());
-                        dtm.addRow(v);
-                    }
-                }
+
+        DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+        dtm.setRowCount(0);
+        Criteria cr = ses.createCriteria(WorkerCommissionPay.class);
+        cr.add(Restrictions.eq("status", 1));
+        List<WorkerCommissionPay> item_list = cr.list();
+        Collections.reverse(item_list);
+        for (WorkerCommissionPay it : item_list) {
+            int iid = it.getWorkers().getWorkersId();
+            if (iid == id) {
+                Vector v = new Vector();
+                v.add(it.getWorkerCommissionPayId());
+                v.add(it.getWorkers().getName());
+                v.add(df.format(it.getAmount()));
+                v.add(it.getPayDate());
+                v.add(it.getPayTime());
+                v.add(it.getUser().getName());
+                dtm.addRow(v);
             }
-        }).start();
+        }
 
     }
 
     private void loadCommissonHistory(int id) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
-                dtm.setRowCount(0);
-                Criteria cr = ses.createCriteria(SaveWadiWorker.class);
-                cr.add(Restrictions.eq("status", 1));
-                List<SaveWadiWorker> item_list = cr.list();
-                Collections.reverse(item_list);
-                for (SaveWadiWorker it : item_list) {
-                    int iid = it.getWorkers().getWorkersId();
-                    if (iid == id) {
-                        Vector v = new Vector();
-                        v.add(it.getSaveWadi().getWadi().getName());
-                        v.add(df.format(it.getCommission()));
-                        v.add(it.getSaveWadi().getSavedDate());
-                        dtm.addRow(v);
-                    }
-                }
+
+        DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
+        dtm.setRowCount(0);
+        Criteria cr = ses.createCriteria(SaveWadiWorker.class);
+        cr.add(Restrictions.eq("status", 1));
+        List<SaveWadiWorker> item_list = cr.list();
+        Collections.reverse(item_list);
+        for (SaveWadiWorker it : item_list) {
+            int iid = it.getWorkers().getWorkersId();
+            if (iid == id) {
+                Vector v = new Vector();
+                v.add(it.getSaveWadi().getWadi().getName());
+                v.add(df.format(it.getCommission()));
+                v.add(it.getSaveWadi().getSavedDate());
+                dtm.addRow(v);
             }
-        }).start();
+        }
 
     }
-    
+
     private void loadCommissonReturnHistory(int id) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DefaultTableModel dtm = (DefaultTableModel) jTable3.getModel();
-                dtm.setRowCount(0);
-                Criteria cr = ses.createCriteria(WadiReturnLog.class);
-                List<WadiReturnLog> item_list = cr.list();
-                Collections.reverse(item_list);
-                for (WadiReturnLog it : item_list) {
-                    int iid = it.getSaveWadiWorker().getWorkers().getWorkersId();
-                    if (iid == id) {
-                        Vector v = new Vector();
-                        v.add(it.getSaveWadiWorker().getSaveWadi().getWadi().getName());
-                        v.add(df.format(it.getReturnCommission()));
-                        v.add(it.getSaveWadiWorker().getSaveWadi().getSavedDate());
-                        dtm.addRow(v);
-                    }
-                }
+
+        DefaultTableModel dtm = (DefaultTableModel) jTable3.getModel();
+        dtm.setRowCount(0);
+        Criteria cr = ses.createCriteria(WadiReturnLog.class);
+        List<WadiReturnLog> item_list = cr.list();
+        Collections.reverse(item_list);
+        for (WadiReturnLog it : item_list) {
+            int iid = it.getSaveWadiWorker().getWorkers().getWorkersId();
+            if (iid == id) {
+                Vector v = new Vector();
+                v.add(it.getSaveWadiWorker().getSaveWadi().getWadi().getName());
+                v.add(df.format(it.getReturnCommission()));
+                v.add(it.getSaveWadiWorker().getSaveWadi().getSavedDate());
+                dtm.addRow(v);
             }
-        }).start();
+        }
 
     }
-    
-    private void PrintRecipt(){
-        
+
+    private void PrintRecipt() {
+
     }
-    
-    
+
 }
