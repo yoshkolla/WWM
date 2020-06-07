@@ -205,7 +205,9 @@ public class Login extends javax.swing.JFrame {
         String password = new String(jPasswordField1.getPassword());
 
         String aa = "";
+        btn_login.setEnabled(false);
         if (user.equals(aa) && password.equals(aa)) {
+            btn_login.setEnabled(true);
             viewThread(":( Please insert user name & password.");
         } else {
             if (attemp < 3) {
@@ -217,13 +219,14 @@ public class Login extends javax.swing.JFrame {
                                     Restrictions.eq("password", password)
                             )).uniqueResult();
                     if (u != null) {
-                        System.out.println(u.getName());
                         if (u.getStatus() == 0) {
+                            btn_login.setEnabled(true);
                             viewThread(":( Access Denied. Account had been blocked.");
                         } else {
                             viewThread(":) Access Granted!", u);
                         }
                     } else {
+                        btn_login.setEnabled(true);
                         viewThread(":( You'r Entered User Name & Password Are Incorrect");
                         attemp++;
                         lb_attemps.setVisible(true);
