@@ -43,18 +43,20 @@ Contributor(s):
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/wije_wadi_manage?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3307/wije_wadi_manage?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
-    <mapping resource="pojos/WadiUser.hbm.xml"/>
-    <mapping resource="pojos/SaveWadiWorker.hbm.xml"/>
-    <mapping resource="pojos/Wadi.hbm.xml"/>
-    <mapping resource="pojos/Item.hbm.xml"/>
-    <mapping resource="pojos/WorkerCommissionPay.hbm.xml"/>
-    <mapping resource="pojos/SaveWadi.hbm.xml"/>
-    <mapping resource="pojos/Workers.hbm.xml"/>
-    <mapping resource="pojos/SaveWadiItems.hbm.xml"/>
-    <mapping resource="pojos/WadiItems.hbm.xml"/>
+    <property name="hibernate.connection.password">123</property>
     <mapping resource="pojos/SaveWadiPayment.hbm.xml"/>
     <mapping resource="pojos/User.hbm.xml"/>
+    <mapping resource="pojos/WadiUser.hbm.xml"/>
+    <mapping resource="pojos/Workers.hbm.xml"/>
+    <mapping resource="pojos/Wadi.hbm.xml"/>
+    <mapping resource="pojos/SaveWadiWorker.hbm.xml"/>
+    <mapping resource="pojos/WorkerCommissionPay.hbm.xml"/>
+    <mapping resource="pojos/WadiItems.hbm.xml"/>
+    <mapping resource="pojos/WadiReturn.hbm.xml"/>
+    <mapping resource="pojos/SaveWadi.hbm.xml"/>
+    <mapping resource="pojos/Item.hbm.xml"/>
+    <mapping resource="pojos/SaveWadiItems.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>
