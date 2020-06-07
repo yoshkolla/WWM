@@ -21,11 +21,12 @@ import javax.swing.JInternalFrame;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.view.JasperViewer;
-import org.hibernate.jdbc.Work;
 import org.hibernate.Session;
+import org.hibernate.jdbc.Work;
 import pojos.User;
 import subui.CreateWadi;
 import subui.ReturnItems;
+import subui.WadiHistory;
 import subui.item;
 import subui.paycommission;
 import subui.report;
@@ -96,6 +97,7 @@ public class Home extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         lb_user = new javax.swing.JLabel();
         jButton8 = new javax.swing.JButton();
+        jButton9 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
@@ -226,6 +228,17 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
+        jButton9.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/wadi_history.png"))); // NOI18N
+        jButton9.setText("Wadi History");
+        jButton9.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
+
         FrameContainer.setLayer(jButton1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         FrameContainer.setLayer(jButton2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         FrameContainer.setLayer(jButton3, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -238,6 +251,7 @@ public class Home extends javax.swing.JFrame {
         FrameContainer.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         FrameContainer.setLayer(lb_user, javax.swing.JLayeredPane.DEFAULT_LAYER);
         FrameContainer.setLayer(jButton8, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        FrameContainer.setLayer(jButton9, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout FrameContainerLayout = new javax.swing.GroupLayout(FrameContainer);
         FrameContainer.setLayout(FrameContainerLayout);
@@ -260,7 +274,9 @@ public class Home extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, FrameContainerLayout.createSequentialGroup()
                                 .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, FrameContainerLayout.createSequentialGroup()
                                 .addGroup(FrameContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -294,7 +310,8 @@ public class Home extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(FrameContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(73, 73, 73)
                 .addGroup(FrameContainerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -598,6 +615,18 @@ public class Home extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
 
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        
+        try {
+            minimizeOtherFrames();
+            JInternalFrame frame = new WadiHistory();
+            FrameContainer.add(frame).setVisible(true);
+            frame.setMaximum(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -646,6 +675,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
+    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
