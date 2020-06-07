@@ -7,7 +7,11 @@ package mainui;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
 import javax.imageio.ImageIO;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JasperFillManager;
 import org.hibernate.Session;
 import utils.Connection;
 
@@ -129,6 +133,18 @@ public class SplashScreen extends javax.swing.JFrame {
                         jProgressBar1.setValue(i);
                         if (i == 25) {
                             Session s = Connection.getConnection();
+                        }
+                        if (i == 50) {
+                            try {
+                                InputStream reportSource = getClass().getResourceAsStream("/reports/production_report.jasper");
+                                HashMap<String, Object> param = new HashMap<>();
+                                param.put("from", null);
+                                param.put("to", null);
+                                param.put("sum", null);
+                                JasperFillManager.fillReport(reportSource, param, new JREmptyDataSource());
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                         }
                         if (i == 100) {
                             lbl_loadingStatus.setText("Done!");
