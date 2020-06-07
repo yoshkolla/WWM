@@ -20,11 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperPrintManager;
-import net.sf.jasperreports.engine.data.JRTableModelDataSource;
-import net.sf.jasperreports.swing.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
-import org.hibernate.Session;
 import org.hibernate.jdbc.Work;
 import org.hibernate.Session;
 import pojos.User;
@@ -36,7 +32,6 @@ import subui.report;
 import subui.user;
 import subui.wadi;
 import subui.worker;
-import utils.Connection;
 
 /**
  *
@@ -634,7 +629,7 @@ public class Home extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Session s = Connection.getConnection();
+                Session s = utils.Connection.getConnection();
                 User u = (User) s.load(User.class, 1);
                 new Home(u).setVisible(true);
             }
