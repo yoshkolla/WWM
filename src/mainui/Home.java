@@ -205,7 +205,7 @@ public class Home extends javax.swing.JFrame {
         lb_user.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
 
         jButton8.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/manage_users.png"))); // NOI18N
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/return_wadi.png"))); // NOI18N
         jButton8.setText("Return Wadi Items");
         jButton8.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         jButton8.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);

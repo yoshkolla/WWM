@@ -104,6 +104,7 @@ public class CreateWadi extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         lb_title = new javax.swing.JLabel();
+        dateChooser_wadiDate = new datechooser.beans.DateChooserCombo();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create Wadi Details");
@@ -136,7 +137,7 @@ public class CreateWadi extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tbl_wadi.setRowHeight(20);
+        tbl_wadi.setRowHeight(25);
         tbl_wadi.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tbl_wadi.getTableHeader().setReorderingAllowed(false);
         tbl_wadi.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -218,7 +219,7 @@ public class CreateWadi extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tbl_wadi_workers.setRowHeight(20);
+        tbl_wadi_workers.setRowHeight(25);
         tbl_wadi_workers.setShowHorizontalLines(false);
         tbl_wadi_workers.getTableHeader().setReorderingAllowed(false);
         tbl_wadi_workers.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -250,7 +251,7 @@ public class CreateWadi extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tbl_all_workers.setRowHeight(20);
+        tbl_all_workers.setRowHeight(25);
         tbl_all_workers.setShowHorizontalLines(false);
         tbl_all_workers.getTableHeader().setReorderingAllowed(false);
         tbl_all_workers.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -350,7 +351,7 @@ public class CreateWadi extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tbl_wadi_items.setRowHeight(20);
+        tbl_wadi_items.setRowHeight(25);
         tbl_wadi_items.setShowHorizontalLines(false);
         tbl_wadi_items.getTableHeader().setReorderingAllowed(false);
         tbl_wadi_items.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -385,7 +386,7 @@ public class CreateWadi extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        tbl_all_items.setRowHeight(20);
+        tbl_all_items.setRowHeight(25);
         tbl_all_items.setShowHorizontalLines(false);
         tbl_all_items.getTableHeader().setReorderingAllowed(false);
         tbl_all_items.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -497,7 +498,7 @@ public class CreateWadi extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Item Name", "Total Qty", "Quality Percentage", "Commission Status"
+                "Item Name", "Total Qty", "Quality Percentage", "Quality Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -511,6 +512,11 @@ public class CreateWadi extends javax.swing.JDialog {
         tbl_item_summary.setShowHorizontalLines(false);
         tbl_item_summary.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tbl_item_summary);
+        if (tbl_item_summary.getColumnModel().getColumnCount() > 0) {
+            tbl_item_summary.getColumnModel().getColumn(3).setMinWidth(0);
+            tbl_item_summary.getColumnModel().getColumn(3).setPreferredWidth(0);
+            tbl_item_summary.getColumnModel().getColumn(3).setMaxWidth(0);
+        }
 
         tbl_worker_summary.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tbl_worker_summary.setModel(new javax.swing.table.DefaultTableModel(
@@ -577,6 +583,12 @@ public class CreateWadi extends javax.swing.JDialog {
         lb_title.setForeground(new java.awt.Color(255, 255, 255));
         lb_title.setText("Select the Wadi");
 
+        dateChooser_wadiDate.setCalendarPreferredSize(new java.awt.Dimension(300, 200));
+        dateChooser_wadiDate.setFormat(1);
+        dateChooser_wadiDate.setFieldFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+        dateChooser_wadiDate.setNavigateFont(new java.awt.Font("Serif", java.awt.Font.PLAIN, 12));
+        dateChooser_wadiDate.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -584,13 +596,17 @@ public class CreateWadi extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lb_title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dateChooser_wadiDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lb_title, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lb_title, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateChooser_wadiDate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -690,7 +706,7 @@ public class CreateWadi extends javax.swing.JDialog {
 
         SaveWadi sw = new SaveWadi();
         sw.setWadi(wadi);
-        sw.setSavedDate(helper.getDate());
+        sw.setSavedDate(helper.getDate(dateChooser_wadiDate.getSelectedDate()));
         sw.setSavedTime(helper.getTime());
         sw.setUser(Home.getLogedUser());
         sw.setStatus(1);
@@ -716,16 +732,10 @@ public class CreateWadi extends javax.swing.JDialog {
             wi.setPrice(item.getPrice());
             wi.setPercentage(Double.valueOf(getQualityPrcntg(item.getItemId())));
             wi.setTotalAmount(wi.getPrice() * wi.getQty());
-
-            if (isItemQCPass(item.getItemId())) {
-                int goodQty = ((qty * getQualityPrcntg(item.getItemId())) / 100); //  [ ( Qty * Cms% ) / 100 ]
-                totalComm += (goodQty * item.getCommission());
-                wi.setCommissionPerItem(item.getCommission());
-                wi.setTotalCommission(goodQty * item.getCommission());
-            } else {
-                wi.setCommissionPerItem(0.00);
-                wi.setTotalCommission(0.00);
-            }
+            int goodQty = ((qty * getQualityPrcntg(item.getItemId())) / 100); //  [ ( Qty * Cms% ) / 100 ]
+            totalComm += (goodQty * item.getCommission());
+            wi.setCommissionPerItem(item.getCommission());
+            wi.setTotalCommission(goodQty * item.getCommission());
             wi.setStatus(1);
             s.save(wi);
         }
@@ -940,6 +950,7 @@ public class CreateWadi extends javax.swing.JDialog {
     private javax.swing.JButton btn_next2;
     private javax.swing.JButton btn_next3;
     private javax.swing.JButton btn_next4;
+    private datechooser.beans.DateChooserCombo dateChooser_wadiDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -1074,11 +1085,9 @@ public class CreateWadi extends javax.swing.JDialog {
             v.add(isItemQCPass(id) ? "Pass" : "Fail");
             item_summary.addRow(v);
 
-            if (isItemQCPass(id)) {
-                Item it = (Item) s.load(Item.class, id);
-                int goodQty = ((qty * getQualityPrcntg(id)) / 100); //  [ ( Qty * Cms% ) / 100 ]
-                totalCommis += (goodQty * it.getCommission());
-            }
+            Item it = (Item) s.load(Item.class, id);
+            int goodQty = ((qty * getQualityPrcntg(id)) / 100); //  [ ( Qty * Cms% ) / 100 ]
+            totalCommis += (goodQty * it.getCommission());
 
         }
 

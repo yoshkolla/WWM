@@ -412,7 +412,7 @@
               <Font name="Segoe UI" size="20" style="1"/>
             </Property>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/manage_users.png"/>
+              <Image iconType="3" name="/images/return_wadi.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Return Wadi Items"/>
             <Property name="horizontalTextPosition" type="int" value="0"/>
