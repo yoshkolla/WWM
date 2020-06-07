@@ -497,7 +497,7 @@ public class CreateWadi extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Item Name", "Total Qty", "Rejected Qty", "QC Pass"
+                "Item Name", "Total Qty", "Quality Percentage", "Commission Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -650,15 +650,14 @@ public class CreateWadi extends javax.swing.JDialog {
             boolean flagNEXTSts = false;
             DefaultTableModel wadiItems = (DefaultTableModel) tbl_wadi_items.getModel();
             for (int i = 0; i < wadiItems.getRowCount(); i++) {
-                if (!isRjctdQtyVALID(Integer.valueOf(wadiItems.getValueAt(i, 0).toString()))) {
+                if (!isQualityPrcntgValue_VALID(Integer.valueOf(wadiItems.getValueAt(i, 0).toString()))) {
                     flagNEXTSts = false;
                     break;
                 } else {
                     int itemID = Integer.parseInt(wadiItems.getValueAt(i, 0).toString());
-                    int totalQTY = Integer.parseInt(wadiItems.getValueAt(i, 2).toString());
-                    int rejectedQTY = getRjctdQty(itemID);
+                    int qltyPRCNTG = getQualityPrcntg(itemID);
 
-                    if (rejectedQTY > totalQTY) {
+                    if (qltyPRCNTG > 100) {
                         flagNEXTSts = false;
                         break;
                     } else {
@@ -669,14 +668,14 @@ public class CreateWadi extends javax.swing.JDialog {
 
             // check Go2-Next-Tab status...
             if (!flagNEXTSts) {
-                JOptionPane.showMessageDialog(this, "Please Insert Valid Rejected-Qty");
+                JOptionPane.showMessageDialog(rootPane, "Please Insert Valid Quality Percentage");
 
             } else { // when all OK -- Focus2NextTab
                 jTabbedPane.setSelectedIndex(4);
                 lb_title.setText("Finalize");
                 loadSummary();
-            }
 
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -715,12 +714,14 @@ public class CreateWadi extends javax.swing.JDialog {
             wi.setItem(item);
             wi.setQty(qty);
             wi.setPrice(item.getPrice());
-            wi.setTotal(wi.getPrice() * wi.getQty());
-            wi.setGoodQty(qty - getRjctdQty(item.getItemId()));
+            wi.setPercentage(Double.valueOf(getQualityPrcntg(item.getItemId())));
+            wi.setTotalAmount(wi.getPrice() * wi.getQty());
+
             if (isItemQCPass(item.getItemId())) {
-                totalComm += (wi.getGoodQty() * item.getCommission());
+                int goodQty = ((qty * getQualityPrcntg(item.getItemId())) / 100); //  [ ( Qty * Cms% ) / 100 ]
+                totalComm += (goodQty * item.getCommission());
                 wi.setCommissionPerItem(item.getCommission());
-                wi.setTotalCommission(wi.getGoodQty() * item.getCommission());
+                wi.setTotalCommission(goodQty * item.getCommission());
             } else {
                 wi.setCommissionPerItem(0.00);
                 wi.setTotalCommission(0.00);
@@ -1054,7 +1055,7 @@ public class CreateWadi extends javax.swing.JDialog {
         }
     }
 
-    double comm;
+    double totalCommis;
 
     private void loadSummary() {
         Session s = Connection.getConnection();
@@ -1065,17 +1066,18 @@ public class CreateWadi extends javax.swing.JDialog {
             int id = Integer.parseInt(items.getValueAt(i, 0).toString());
             String name = items.getValueAt(i, 1).toString();
             int qty = Integer.parseInt(items.getValueAt(i, 2).toString());
+
             Vector v = new Vector();
             v.add(name);
             v.add(qty);
-            v.add(getRjctdQty(id));
+            v.add(getQualityPrcntg(id));
             v.add(isItemQCPass(id) ? "Pass" : "Fail");
             item_summary.addRow(v);
 
             if (isItemQCPass(id)) {
                 Item it = (Item) s.load(Item.class, id);
-                int goodQty = qty - getRjctdQty(id);
-                comm += (goodQty * it.getCommission());
+                int goodQty = ((qty * getQualityPrcntg(id)) / 100); //  [ ( Qty * Cms% ) / 100 ]
+                totalCommis += (goodQty * it.getCommission());
             }
 
         }
@@ -1085,7 +1087,7 @@ public class CreateWadi extends javax.swing.JDialog {
         for (int i = 0; i < workers.getRowCount(); i++) {
             Vector v = new Vector();
             v.add(workers.getValueAt(i, 1));
-            v.add(new DecimalFormat("0.00").format(comm / workers.getRowCount()));
+            v.add(new DecimalFormat("0.00").format(totalCommis / workers.getRowCount()));
             worker_summary.addRow(v);
         }
     }
@@ -1103,26 +1105,26 @@ public class CreateWadi extends javax.swing.JDialog {
         return false;
     }
 
-    private Integer getRjctdQty(int id) {
+    private Integer getQualityPrcntg(int id) {
         Component[] cs = jPanel_qc.getComponents();
         for (Component c : cs) {
             if (c instanceof ItemQCComponent) {
                 ItemQCComponent ic = (ItemQCComponent) c;
                 if (ic.item_id == id) {
-                    return ic.getRejectedQty();
+                    return ic.getQualityPrcntg();
                 }
             }
         }
         return 0;
     }
 
-    private boolean isRjctdQtyVALID(int id) {
+    private boolean isQualityPrcntgValue_VALID(int id) {
         Component[] cs = jPanel_qc.getComponents();
         for (Component c : cs) {
             if (c instanceof ItemQCComponent) {
                 ItemQCComponent ic = (ItemQCComponent) c;
                 if (ic.item_id == id) {
-                    return ic.isRejectedQtyValid();
+                    return ic.isQualityPrcntgValid();
                 }
             }
         }
