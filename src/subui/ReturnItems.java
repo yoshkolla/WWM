@@ -368,8 +368,7 @@ public class ReturnItems extends javax.swing.JInternalFrame {
             btn_save.setEnabled(false);
 
             Session s = Connection.getConnection();
-            
-            
+
             SaveWadi sw = (SaveWadi) s.load(SaveWadi.class, Integer.parseInt(tbl_wadi.getValueAt(tbl_wadi.getSelectedRow(), 0).toString()));
             WadiReturn wr = (WadiReturn) s.createCriteria(WadiReturn.class).add(Restrictions.eq("wadi", sw.getWadi())).uniqueResult();
             if (wr != null) {
@@ -475,13 +474,18 @@ public class ReturnItems extends javax.swing.JInternalFrame {
 
         SaveWadi w = (SaveWadi) s.load(SaveWadi.class, Integer.parseInt(tbl_wadi.getValueAt(tbl_wadi.getSelectedRow(), 0).toString()));
 
+        // "id", "commission", "precentage", "Item Name", "Total Qty", "Return Qty"
         DefaultTableModel dtm_return = (DefaultTableModel) tbl_return_items.getModel();
         for (int i = 0; i < dtm_return.getRowCount(); i++) {
             int item_id = Integer.parseInt(dtm_return.getValueAt(i, 0).toString());
             double comm = Double.parseDouble(dtm_return.getValueAt(i, 1).toString());
             double prec = Double.parseDouble(dtm_return.getValueAt(i, 2).toString());
+            int tot_qty = Integer.parseInt(dtm_return.getValueAt(i, 4).toString());
             int ret_qty = Integer.parseInt(dtm_return.getValueAt(i, 5).toString());
-            double tot = ((ret_qty / 100) * prec) * comm;
+
+            int bal_qty = tot_qty - ret_qty;
+            double tot = ((bal_qty * prec) / 100) * comm;
+            System.out.println(tot);
             SaveWadiItems wi = (SaveWadiItems) s.load(SaveWadiItems.class, item_id);
 
             WadiReturn wr = new WadiReturn();
@@ -497,7 +501,7 @@ public class ReturnItems extends javax.swing.JInternalFrame {
                 Workers wo = ww.getWorkers();
                 wo.setPaybleAmount(wo.getPaybleAmount() - (tot / wList.size()));
                 s.update(wo);
-
+                
                 WadiReturnLog log = new WadiReturnLog();
                 log.setSaveWadiWorker(ww);
                 log.setReturnCommission(tot / wList.size());
