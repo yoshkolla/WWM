@@ -5,6 +5,23 @@
  */
 package subui;
 
+import ctrl.helper;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
+import pojos.SaveWadi;
+import pojos.SaveWadiItems;
+import pojos.SaveWadiWorker;
+import pojos.Wadi;
+import pojos.WadiReturn;
+import pojos.WadiReturnLog;
+import pojos.Workers;
+import utils.Connection;
+
 /**
  *
  * @author SCORFi3LD
@@ -30,10 +47,10 @@ public class ReturnItems extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
+        dt_date = new datechooser.beans.DateChooserCombo();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_wadi = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        btn_load = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -41,9 +58,9 @@ public class ReturnItems extends javax.swing.JInternalFrame {
         tbl_all_items = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbl_return_items = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btn_add = new javax.swing.JButton();
+        btn_remove = new javax.swing.JButton();
+        btn_save = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -58,9 +75,10 @@ public class ReturnItems extends javax.swing.JInternalFrame {
 
         jLabel1.setText("Date");
 
-        dateChooserCombo1.setCalendarPreferredSize(new java.awt.Dimension(300, 200));
-        dateChooserCombo1.setFormat(1);
+        dt_date.setCalendarPreferredSize(new java.awt.Dimension(300, 200));
+        dt_date.setFormat(1);
 
+        tbl_wadi.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         tbl_wadi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -77,12 +95,29 @@ public class ReturnItems extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        tbl_wadi.setRowHeight(20);
         tbl_wadi.getTableHeader().setReorderingAllowed(false);
+        tbl_wadi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbl_wadiMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_wadi);
 
-        jButton1.setText("Load Details");
+        btn_load.setText("Load Details");
+        btn_load.setEnabled(false);
+        btn_load.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_loadActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Search");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -96,11 +131,11 @@ public class ReturnItems extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_load, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(dateChooserCombo1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                            .addComponent(dt_date, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -115,13 +150,13 @@ public class ReturnItems extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(dt_date, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
+                .addComponent(btn_load, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -131,53 +166,71 @@ public class ReturnItems extends javax.swing.JInternalFrame {
         jLabel6.setText(" Select the returnning Items");
         jLabel6.setOpaque(true);
 
+        tbl_all_items.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         tbl_all_items.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "id", "commission", "precentage", "Item Name", "Total Qty"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tbl_all_items.getTableHeader().setReorderingAllowed(false);
+        tbl_all_items.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbl_all_itemsMouseReleased(evt);
             }
         });
         jScrollPane2.setViewportView(tbl_all_items);
 
+        tbl_return_items.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         tbl_return_items.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "id", "commission", "precentage", "Item Name", "Total Qty", "Return Qty"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tbl_return_items.getTableHeader().setReorderingAllowed(false);
+        tbl_return_items.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tbl_return_itemsMouseReleased(evt);
+            }
+        });
         jScrollPane3.setViewportView(tbl_return_items);
 
-        jButton3.setText(">");
-        jButton3.setEnabled(false);
+        btn_add.setText(">");
+        btn_add.setEnabled(false);
+        btn_add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("<");
-        jButton4.setEnabled(false);
+        btn_remove.setText("<");
+        btn_remove.setEnabled(false);
+        btn_remove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_removeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -193,14 +246,14 @@ public class ReturnItems extends javax.swing.JInternalFrame {
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE))
+                            .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_remove, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 212, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
-        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jScrollPane2, jScrollPane3});
+        jPanel2Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btn_add, btn_remove});
 
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,18 +263,24 @@ public class ReturnItems extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(jScrollPane2)
+                            .addComponent(jScrollPane3))
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_remove, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
-        jButton5.setText("Save");
+        btn_save.setText("Save");
+        btn_save.setEnabled(false);
+        btn_save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_saveActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -235,7 +294,7 @@ public class ReturnItems extends javax.swing.JInternalFrame {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -243,25 +302,188 @@ public class ReturnItems extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        String date = helper.getDate(dt_date.getSelectedDate());
+        Session s = Connection.getConnection();
+        List<SaveWadi> swList = s.createCriteria(SaveWadi.class).add(Restrictions.eq("savedDate", date)).list();
+
+        DefaultTableModel dtm = (DefaultTableModel) tbl_wadi.getModel();
+        dtm.setRowCount(0);
+        for (SaveWadi sw : swList) {
+            Vector v = new Vector();
+            v.add(sw.getSaveWadiId());
+            v.add(sw.getWadi().getWadiId());
+            dtm.addRow(v);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tbl_wadiMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_wadiMouseReleased
+
+        if (tbl_wadi.isRowSelected(tbl_wadi.getSelectedRow())) {
+            btn_load.setEnabled(true);
+        } else {
+            btn_load.setEnabled(false);
+        }
+    }//GEN-LAST:event_tbl_wadiMouseReleased
+
+    private void btn_loadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loadActionPerformed
+
+        Session s = Connection.getConnection();
+        Wadi w = (Wadi) s.load(Wadi.class, Integer.parseInt(tbl_wadi.getValueAt(tbl_wadi.getSelectedRow(), 0).toString()));
+        List<SaveWadiItems> wiList = s.createCriteria(SaveWadiItems.class).add(Restrictions.eq("wadi", w)).list();
+
+        DefaultTableModel dtm = (DefaultTableModel) tbl_all_items.getModel();
+        dtm.setRowCount(0);
+        for (SaveWadiItems wi : wiList) {
+            Vector v = new Vector();
+            v.add(wi.getSaveWadiItemsId());
+            v.add(wi.getCommissionPerItem());
+            v.add(wi.getPercentage());
+            v.add(wi.getItem().getName());
+            v.add(wi.getQty());
+            dtm.addRow(v);
+        }
+    }//GEN-LAST:event_btn_loadActionPerformed
+
+    private void tbl_all_itemsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_all_itemsMouseReleased
+
+        if (tbl_all_items.isRowSelected(tbl_all_items.getSelectedRow())) {
+            btn_add.setEnabled(true);
+        }
+    }//GEN-LAST:event_tbl_all_itemsMouseReleased
+
+    private void tbl_return_itemsMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_return_itemsMouseReleased
+
+        if (tbl_return_items.isRowSelected(tbl_return_items.getSelectedRow())) {
+            btn_remove.setEnabled(true);
+        }
+    }//GEN-LAST:event_tbl_return_itemsMouseReleased
+
+    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
+
+        AddItemQtyDialog dialog = new AddItemQtyDialog(null, true);
+        dialog.setVisible(true);
+        if (dialog.done) {
+            // "id", "commission", "precentage", "Item Name", "Total Qty"
+            String id = tbl_all_items.getValueAt(tbl_all_items.getSelectedRow(), 0).toString();
+            String commission = tbl_all_items.getValueAt(tbl_all_items.getSelectedRow(), 1).toString();
+            String precentage = tbl_all_items.getValueAt(tbl_all_items.getSelectedRow(), 2).toString();
+            String name = tbl_all_items.getValueAt(tbl_all_items.getSelectedRow(), 3).toString();
+            String qty = tbl_all_items.getValueAt(tbl_all_items.getSelectedRow(), 4).toString();
+
+            DefaultTableModel dtm = (DefaultTableModel) tbl_all_items.getModel();
+            dtm.removeRow(tbl_all_items.getSelectedRow());
+
+            //"id", "commission", "precentage", "Item Name", "Total Qty", "Return Qty"
+            DefaultTableModel dtm1 = (DefaultTableModel) tbl_return_items.getModel();
+            Vector v = new Vector();
+            v.add(id);
+            v.add(commission);
+            v.add(precentage);
+            v.add(name);
+            v.add(qty);
+            v.add(dialog.qty);
+            dtm1.addRow(v);
+        }
+        if (isReturnItemAdded()) {
+            btn_save.setEnabled(true);
+        } else {
+            btn_save.setEnabled(false);
+        }
+    }//GEN-LAST:event_btn_addActionPerformed
+
+    private void btn_removeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removeActionPerformed
+
+        //"id", "commission", "precentage", "Item Name", "Total Qty", "Return Qty"
+        String id = tbl_return_items.getValueAt(tbl_return_items.getSelectedRow(), 0).toString();
+        String commission = tbl_return_items.getValueAt(tbl_return_items.getSelectedRow(), 1).toString();
+        String precentage = tbl_return_items.getValueAt(tbl_return_items.getSelectedRow(), 2).toString();
+        String name = tbl_return_items.getValueAt(tbl_return_items.getSelectedRow(), 3).toString();
+        String qty = tbl_return_items.getValueAt(tbl_return_items.getSelectedRow(), 4).toString();
+
+        DefaultTableModel dtm = (DefaultTableModel) tbl_return_items.getModel();
+        dtm.removeRow(tbl_return_items.getSelectedRow());
+
+        // "id", "commission", "precentage", "Item Name", "Total Qty"
+        DefaultTableModel dtm1 = (DefaultTableModel) tbl_return_items.getModel();
+        Vector v = new Vector();
+        v.add(id);
+        v.add(commission);
+        v.add(precentage);
+        v.add(name);
+        v.add(qty);
+        dtm1.addRow(v);
+
+        if (isReturnItemAdded()) {
+            btn_save.setEnabled(true);
+        } else {
+            btn_save.setEnabled(false);
+        }
+    }//GEN-LAST:event_btn_removeActionPerformed
+
+    private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
+
+        Session s = Connection.getConnection();
+        Transaction tr = s.beginTransaction();
+
+        Wadi w = (Wadi) s.load(Wadi.class, tbl_wadi.getValueAt(tbl_wadi.getSelectedRow(), 0).toString());
+
+        DefaultTableModel dtm_return = (DefaultTableModel) tbl_return_items.getModel();
+        for (int i = 0; i < dtm_return.getRowCount(); i++) {
+            int item_id = Integer.parseInt(dtm_return.getValueAt(i, 0).toString());
+            double comm = Double.parseDouble(dtm_return.getValueAt(i, 1).toString());
+            double prec = Double.parseDouble(dtm_return.getValueAt(i, 2).toString());
+            int ret_qty = Integer.parseInt(dtm_return.getValueAt(i, 5).toString());
+            double tot = ((ret_qty / 100) * prec) * comm;
+            SaveWadiItems wi = (SaveWadiItems) s.load(SaveWadiItems.class, item_id);
+
+            WadiReturn wr = new WadiReturn();
+            wr.setWadi(w);
+            wr.setSaveWadiItems(wi);
+            wr.setReturnQty(ret_qty);
+            wr.setReturnCommission(tot);
+            wr.setStatus(1);
+            s.save(wr);
+
+            SaveWadi sw = (SaveWadi) s.createCriteria(SaveWadi.class).add(Restrictions.eq("wadi", w)).uniqueResult();
+            List<SaveWadiWorker> wList = s.createCriteria(SaveWadiWorker.class).add(Restrictions.eq("saveWadi", sw)).list();
+            for (SaveWadiWorker ww : wList) {
+                Workers wo = ww.getWorkers();
+                wo.setPaybleAmount(wo.getPaybleAmount() - (tot / wList.size()));
+                s.update(wo);
+
+                WadiReturnLog log = new WadiReturnLog();
+                log.setSaveWadiWorker(ww);
+                log.setReturnCommission(tot / wList.size());
+                s.save(log);
+            }
+        }
+
+        tr.commit();
+        JOptionPane.showMessageDialog(rootPane, "Successfuly Returned!");
+        resetAll();
+    }//GEN-LAST:event_btn_saveActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private datechooser.beans.DateChooserCombo dateChooserCombo1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btn_add;
+    private javax.swing.JButton btn_load;
+    private javax.swing.JButton btn_remove;
+    private javax.swing.JButton btn_save;
+    private datechooser.beans.DateChooserCombo dt_date;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -274,4 +496,25 @@ public class ReturnItems extends javax.swing.JInternalFrame {
     private javax.swing.JTable tbl_return_items;
     private javax.swing.JTable tbl_wadi;
     // End of variables declaration//GEN-END:variables
+
+    private boolean isReturnItemAdded() {
+        return tbl_return_items.getRowCount() != 0;
+    }
+
+    private void resetAll() {
+        DefaultTableModel dtm = (DefaultTableModel) tbl_wadi.getModel();
+        DefaultTableModel dtm1 = (DefaultTableModel) tbl_wadi.getModel();
+        DefaultTableModel dtm2 = (DefaultTableModel) tbl_wadi.getModel();
+
+        dtm.setRowCount(0);
+        dtm1.setRowCount(0);
+        dtm2.setRowCount(0);
+
+        btn_load.setEnabled(false);
+        btn_add.setEnabled(false);
+        btn_remove.setEnabled(false);
+        btn_save.setEnabled(false);
+        
+        dt_date.setText(helper.getDate());
+    }
 }
