@@ -59,6 +59,8 @@ public class item extends javax.swing.JInternalFrame {
         txt_item_name = new javax.swing.JTextField();
         btn_save = new javax.swing.JButton();
         btn_save1 = new javax.swing.JButton();
+        txt_item_price = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -129,40 +131,66 @@ public class item extends javax.swing.JInternalFrame {
             }
         });
 
+        txt_item_price.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txt_item_price.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_item_priceActionPerformed(evt);
+            }
+        });
+        txt_item_price.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txt_item_priceKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_item_priceKeyReleased(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setText("Item Price :");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(11, 11, 11)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txt_item_name, javax.swing.GroupLayout.PREFERRED_SIZE, 371, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_item_name))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 233, Short.MAX_VALUE)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txt_item_price, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_item_commission, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txt_item_commission, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_save)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_save1)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txt_item_commission, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3)
                     .addComponent(txt_item_name, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_save, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_save1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_save1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_item_price, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(txt_item_commission, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addGap(0, 37, Short.MAX_VALUE))
         );
 
@@ -172,11 +200,11 @@ public class item extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Item ID", "Item Name", "Commission RS.", "Added Date", "Added Time", "User"
+                "Item ID", "Item Name", "Commission RS.", "Price", "Added Date", "Added Time", "User"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -248,7 +276,7 @@ public class item extends javax.swing.JInternalFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
@@ -271,8 +299,8 @@ public class item extends javax.swing.JInternalFrame {
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
 
         if (on_update == 0) {
-            if (!txt_item_commission.getText().equals("") && !txt_item_name.getText().equals("")) {
-                saveItem(txt_item_name.getText(), Double.parseDouble(txt_item_commission.getText()));
+            if (!txt_item_commission.getText().equals("") && !txt_item_name.getText().equals("") && !txt_item_price.getText().equals("")) {
+                saveItem(txt_item_name.getText(), Double.parseDouble(txt_item_commission.getText()), Double.parseDouble(txt_item_price.getText()));
             } else {
                 JOptionPane.showMessageDialog(this, "Emty Data ! Please Retry.");
             }
@@ -289,7 +317,7 @@ public class item extends javax.swing.JInternalFrame {
     private void txt_item_nameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_item_nameKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             if (!txt_item_name.getText().equals("")) {
-                txt_item_commission.grabFocus();
+                txt_item_price.grabFocus();
             }
         }
     }//GEN-LAST:event_txt_item_nameKeyPressed
@@ -299,7 +327,7 @@ public class item extends javax.swing.JInternalFrame {
 
             if (on_update == 0) {
                 if (!txt_item_commission.getText().equals("")) {
-                    saveItem(txt_item_name.getText(), Double.parseDouble(txt_item_commission.getText()));
+                    saveItem(txt_item_name.getText(), Double.parseDouble(txt_item_commission.getText()), Double.parseDouble(txt_item_price.getText()));
                 } else {
                     JOptionPane.showMessageDialog(this, "Emty Data ! Please Retry.");
                 }
@@ -307,13 +335,12 @@ public class item extends javax.swing.JInternalFrame {
                 updateItem(on_update_item_id);
             }
         }
-
     }//GEN-LAST:event_txt_item_commissionKeyPressed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (jTable1.getSelectedRow() >= 0) {
             int option = JOptionPane.showConfirmDialog(this, "Do you want to delete this item ?");
-            if(option == 0){
+            if (option == 0) {
                 on_update_item_id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
                 Transaction tr = ses.beginTransaction();
                 Item item = (Item) ses.load(Item.class, on_update_item_id);
@@ -322,7 +349,7 @@ public class item extends javax.swing.JInternalFrame {
                 clear();
                 loadDataToTable();
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(this, "Plase Select Row From Table !");
         }
@@ -335,20 +362,42 @@ public class item extends javax.swing.JInternalFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         clear();
         loadDataToTable();
+        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (jTable1.getSelectedRow() >= 0) {
-            on_update_item_id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
-            txt_item_name.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
-            txt_item_commission.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString());
             btn_save.setText("UPDATE");
             txt_item_name.grabFocus();
             on_update = 1;
+            try {
+                on_update_item_id = Integer.parseInt(jTable1.getValueAt(jTable1.getSelectedRow(), 0).toString());
+                txt_item_name.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 1).toString());
+                txt_item_commission.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 2).toString());
+                txt_item_price.setText(jTable1.getValueAt(jTable1.getSelectedRow(), 3).toString());
+            } catch (Exception e) {
+            }
+
         } else {
             JOptionPane.showMessageDialog(this, "Plase Select Row From Table !");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txt_item_priceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_item_priceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_item_priceActionPerformed
+
+    private void txt_item_priceKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_item_priceKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (!txt_item_price.getText().equals("")) {
+                txt_item_commission.grabFocus();
+            }
+        }
+    }//GEN-LAST:event_txt_item_priceKeyPressed
+
+    private void txt_item_priceKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_item_priceKeyReleased
+
+    }//GEN-LAST:event_txt_item_priceKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -361,11 +410,13 @@ public class item extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txt_item_commission;
     private javax.swing.JTextField txt_item_name;
+    private javax.swing.JTextField txt_item_price;
     // End of variables declaration//GEN-END:variables
 
     private void updateItem(int Item_Id) {
@@ -382,6 +433,12 @@ public class item extends javax.swing.JInternalFrame {
                     }
 
                 }
+                if (!txt_item_price.getText().equals("")) {
+                    if (Double.parseDouble(txt_item_price.getText()) > 0) {
+                        item.setPrice(Double.parseDouble(txt_item_price.getText()));
+                    }
+
+                }
                 tr.commit();
                 clear();
                 loadDataToTable();
@@ -393,7 +450,7 @@ public class item extends javax.swing.JInternalFrame {
         }
     }
 
-    private boolean saveItem(String Name, double Commission) {
+    private boolean saveItem(String Name, double Commission, double price) {
         boolean flag = false;
         if (!Name.equals("") && Commission >= 0) {
             try {
@@ -401,6 +458,7 @@ public class item extends javax.swing.JInternalFrame {
                 Item item = new Item();
                 item.setName(Name);
                 item.setCommission(Commission);
+                item.setPrice(price);
                 item.setAddedDate(help.getDate());
                 item.setAddedTime(help.getTime());
                 item.setUser(user);
@@ -425,6 +483,7 @@ public class item extends javax.swing.JInternalFrame {
         btn_save.setText("SAVE");
         txt_item_commission.setText("");
         txt_item_name.setText("");
+        txt_item_price.setText("");
         txt_item_name.grabFocus();
         on_update = 0;
         on_update_item_id = 0;
@@ -441,6 +500,7 @@ public class item extends javax.swing.JInternalFrame {
             v.add(it.getItemId());
             v.add(it.getName());
             v.add(it.getCommission());
+            v.add(it.getPrice());
             v.add(it.getAddedDate());
             v.add(it.getAddedTime());
             v.add(it.getUser().getName());
