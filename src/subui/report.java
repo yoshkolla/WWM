@@ -6,7 +6,9 @@
 package subui;
 
 import ctrl.helper;
+import ctrl.itemBean;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -61,11 +63,11 @@ public class report extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Item Name", "Qty"
+                "Item Name", "Qty", "price", "total"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -226,27 +228,35 @@ public class report extends javax.swing.JInternalFrame {
                         helper.getDate(dc_to.getSelectedDate())
                 )).list();
 
-        HashMap<String, Integer> map = new HashMap<>();
+        HashMap<String, itemBean> map = new HashMap<>();
         for (SaveWadi sw : swList) {
             List<SaveWadiItems> wiList = s.createCriteria(SaveWadiItems.class).add(Restrictions.eq("saveWadi", sw)).list();
             for (SaveWadiItems wi : wiList) {
                 if (map.get(wi.getItem().getName()) != null) {
-                    int aqty = map.get(wi.getItem().getName());
-                    map.put(wi.getItem().getName(), aqty + wi.getQty());
+                    itemBean aqty = map.get(wi.getItem().getName());
+                    itemBean itb = new itemBean((wi.getQty()+aqty.getQty()), (wi.getPrice()),( wi.getTotalAmount()+aqty.getTotalprice()), wi.getItem().getItemId());
+                    map.put(wi.getItem().getName(), itb);
                 } else {
-                    map.put(wi.getItem().getName(), wi.getQty());
+                    itemBean itb = new itemBean(wi.getQty(), wi.getPrice(), wi.getTotalAmount(), wi.getItem().getItemId());
+                    map.put(wi.getItem().getName(), itb);
                 }
             }
         }
 
         int sum = 0;
+        double total =0;
+        DecimalFormat df = new DecimalFormat("0.00");
         DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
         dtm.setRowCount(0);
         for (String item : map.keySet()) {
             Vector v = new Vector();
             v.add(item);
-            v.add(map.get(item));
-            sum += map.get(item);
+            itemBean ib = map.get(item);
+            v.add(df.format(ib.getQty()));
+            v.add(df.format(ib.getPrice()));
+            v.add(df.format(ib.getTotalprice()));
+            sum += ib.getQty();
+            total +=ib.getTotalprice();
             dtm.addRow(v);
         }
 
@@ -255,7 +265,8 @@ public class report extends javax.swing.JInternalFrame {
             HashMap<String, Object> para = new HashMap<>();
             para.put("from", helper.getDate(dc_from.getSelectedDate()));
             para.put("to", helper.getDate(dc_to.getSelectedDate()));
-            para.put("sum", sum);
+            para.put("sum", df.format(sum));
+            para.put("total", df.format(total));
             JasperPrint jp = JasperFillManager.fillReport(report, para, new JRTableModelDataSource(dtm));
             JRViewer jv = new JRViewer(jp);
             jTabbedPane1.removeAll();
