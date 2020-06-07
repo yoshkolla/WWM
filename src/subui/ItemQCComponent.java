@@ -27,7 +27,7 @@ public class ItemQCComponent extends javax.swing.JPanel {
         this.item_id = item_id;
         lb_title.setText(itemName);
         lb_totalQty.setText(String.valueOf(totalQty));
-        txt_qualityPRCNTG.setText("0");
+        txt_qualityPRCNTG.setText("100");
     }
 
     /**

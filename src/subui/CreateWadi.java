@@ -104,6 +104,7 @@ public class CreateWadi extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         lb_title = new javax.swing.JLabel();
+        dateChooser_wadiDate = new datechooser.beans.DateChooserCombo();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Create Wadi Details");
@@ -582,6 +583,12 @@ public class CreateWadi extends javax.swing.JDialog {
         lb_title.setForeground(new java.awt.Color(255, 255, 255));
         lb_title.setText("Select the Wadi");
 
+        dateChooser_wadiDate.setCalendarPreferredSize(new java.awt.Dimension(300, 200));
+        dateChooser_wadiDate.setFormat(1);
+        dateChooser_wadiDate.setFieldFont(new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 12));
+        dateChooser_wadiDate.setNavigateFont(new java.awt.Font("Serif", java.awt.Font.PLAIN, 12));
+        dateChooser_wadiDate.setBehavior(datechooser.model.multiple.MultyModelBehavior.SELECT_SINGLE);
+
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
@@ -589,13 +596,17 @@ public class CreateWadi extends javax.swing.JDialog {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lb_title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(dateChooser_wadiDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(lb_title, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lb_title, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateChooser_wadiDate, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -695,7 +706,7 @@ public class CreateWadi extends javax.swing.JDialog {
 
         SaveWadi sw = new SaveWadi();
         sw.setWadi(wadi);
-        sw.setSavedDate(helper.getDate());
+        sw.setSavedDate(helper.getDate(dateChooser_wadiDate.getSelectedDate()));
         sw.setSavedTime(helper.getTime());
         sw.setUser(Home.getLogedUser());
         sw.setStatus(1);
@@ -939,6 +950,7 @@ public class CreateWadi extends javax.swing.JDialog {
     private javax.swing.JButton btn_next2;
     private javax.swing.JButton btn_next3;
     private javax.swing.JButton btn_next4;
+    private datechooser.beans.DateChooserCombo dateChooser_wadiDate;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
