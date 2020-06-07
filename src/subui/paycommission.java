@@ -643,5 +643,9 @@ public class paycommission extends javax.swing.JInternalFrame {
 
     }
     
+    private void PrintRecipt(){
+        
+    }
+    
     
 }
