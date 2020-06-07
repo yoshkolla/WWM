@@ -70,7 +70,6 @@ public class paycommission extends javax.swing.JInternalFrame {
         paybale_amount = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
-        btn_save2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
@@ -160,15 +159,6 @@ public class paycommission extends javax.swing.JInternalFrame {
         jLabel7.setText("Payable Commission");
         jLabel7.setOpaque(true);
 
-        btn_save2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btn_save2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/save_x24.png"))); // NOI18N
-        btn_save2.setText("PAY + PRINT");
-        btn_save2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_save2ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -186,8 +176,7 @@ public class paycommission extends javax.swing.JInternalFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(94, 94, 94)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -199,10 +188,8 @@ public class paycommission extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_save)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_save2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btn_save1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(161, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addGap(594, 594, 594)
@@ -237,8 +224,7 @@ public class paycommission extends javax.swing.JInternalFrame {
                     .addComponent(jLabel2)
                     .addComponent(txt_worker_pay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_save)
-                    .addComponent(btn_save1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_save2))
+                    .addComponent(btn_save1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(33, 33, 33))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -296,6 +282,7 @@ public class paycommission extends javax.swing.JInternalFrame {
         jLabel6.setText("Commission History");
         jLabel6.setOpaque(true);
 
+        jTable2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -312,8 +299,10 @@ public class paycommission extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable2.setRowHeight(18);
         jScrollPane2.setViewportView(jTable2);
 
+        jTable3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -330,12 +319,13 @@ public class paycommission extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTable3.setRowHeight(18);
         jScrollPane3.setViewportView(jTable3);
 
         jLabel8.setBackground(new java.awt.Color(234, 32, 39));
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Commission History");
+        jLabel8.setText("Commission Return History");
         jLabel8.setOpaque(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -360,7 +350,9 @@ public class paycommission extends javax.swing.JInternalFrame {
                         .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane3)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -378,7 +370,7 @@ public class paycommission extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 220, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 224, Short.MAX_VALUE)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -452,15 +444,10 @@ public class paycommission extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void btn_save2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_save2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_save2ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_save1;
-    private javax.swing.JButton btn_save2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
@@ -598,7 +585,7 @@ public class paycommission extends javax.swing.JInternalFrame {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+                DefaultTableModel dtm = (DefaultTableModel) jTable2.getModel();
                 dtm.setRowCount(0);
                 Criteria cr = ses.createCriteria(SaveWadiWorker.class);
                 cr.add(Restrictions.eq("status", 1));
@@ -623,7 +610,7 @@ public class paycommission extends javax.swing.JInternalFrame {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
+                DefaultTableModel dtm = (DefaultTableModel) jTable3.getModel();
                 dtm.setRowCount(0);
                 Criteria cr = ses.createCriteria(WadiReturnLog.class);
                 List<WadiReturnLog> item_list = cr.list();
