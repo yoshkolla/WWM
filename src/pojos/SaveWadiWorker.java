@@ -1,5 +1,5 @@
 package pojos;
-// Generated Jun 7, 2020 12:03:44 PM by Hibernate Tools 4.3.1
+// Generated Jun 7, 2020 5:09:46 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -17,6 +17,7 @@ public class SaveWadiWorker  implements java.io.Serializable {
      private Double commission;
      private Integer status;
      private Set saveWadiPayments = new HashSet(0);
+     private Set wadiReturnLogs = new HashSet(0);
 
     public SaveWadiWorker() {
     }
@@ -26,12 +27,13 @@ public class SaveWadiWorker  implements java.io.Serializable {
         this.saveWadi = saveWadi;
         this.workers = workers;
     }
-    public SaveWadiWorker(SaveWadi saveWadi, Workers workers, Double commission, Integer status, Set saveWadiPayments) {
+    public SaveWadiWorker(SaveWadi saveWadi, Workers workers, Double commission, Integer status, Set saveWadiPayments, Set wadiReturnLogs) {
        this.saveWadi = saveWadi;
        this.workers = workers;
        this.commission = commission;
        this.status = status;
        this.saveWadiPayments = saveWadiPayments;
+       this.wadiReturnLogs = wadiReturnLogs;
     }
    
     public Integer getSaveWadiWorkerId() {
@@ -75,6 +77,13 @@ public class SaveWadiWorker  implements java.io.Serializable {
     
     public void setSaveWadiPayments(Set saveWadiPayments) {
         this.saveWadiPayments = saveWadiPayments;
+    }
+    public Set getWadiReturnLogs() {
+        return this.wadiReturnLogs;
+    }
+    
+    public void setWadiReturnLogs(Set wadiReturnLogs) {
+        this.wadiReturnLogs = wadiReturnLogs;
     }
 
 

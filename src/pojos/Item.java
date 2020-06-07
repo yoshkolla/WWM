@@ -1,5 +1,5 @@
 package pojos;
-// Generated Jun 7, 2020 12:03:44 PM by Hibernate Tools 4.3.1
+// Generated Jun 7, 2020 5:09:46 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -15,10 +15,10 @@ public class Item  implements java.io.Serializable {
      private User user;
      private String name;
      private Double commission;
+     private Double price;
      private String addedDate;
      private String addedTime;
      private Integer status;
-     private Double price;
      private Set wadiItemses = new HashSet(0);
      private Set saveWadiItemses = new HashSet(0);
 
@@ -29,14 +29,14 @@ public class Item  implements java.io.Serializable {
     public Item(User user) {
         this.user = user;
     }
-    public Item(User user, String name, Double commission, String addedDate, String addedTime, Integer status, Double price, Set wadiItemses, Set saveWadiItemses) {
+    public Item(User user, String name, Double commission, Double price, String addedDate, String addedTime, Integer status, Set wadiItemses, Set saveWadiItemses) {
        this.user = user;
        this.name = name;
        this.commission = commission;
+       this.price = price;
        this.addedDate = addedDate;
        this.addedTime = addedTime;
        this.status = status;
-       this.price = price;
        this.wadiItemses = wadiItemses;
        this.saveWadiItemses = saveWadiItemses;
     }
@@ -69,6 +69,13 @@ public class Item  implements java.io.Serializable {
     public void setCommission(Double commission) {
         this.commission = commission;
     }
+    public Double getPrice() {
+        return this.price;
+    }
+    
+    public void setPrice(Double price) {
+        this.price = price;
+    }
     public String getAddedDate() {
         return this.addedDate;
     }
@@ -89,13 +96,6 @@ public class Item  implements java.io.Serializable {
     
     public void setStatus(Integer status) {
         this.status = status;
-    }
-    public Double getPrice() {
-        return this.price;
-    }
-    
-    public void setPrice(Double price) {
-        this.price = price;
     }
     public Set getWadiItemses() {
         return this.wadiItemses;

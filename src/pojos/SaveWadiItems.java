@@ -1,5 +1,5 @@
 package pojos;
-// Generated Jun 7, 2020 12:03:44 PM by Hibernate Tools 4.3.1
+// Generated Jun 7, 2020 5:09:46 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -16,10 +16,10 @@ public class SaveWadiItems  implements java.io.Serializable {
      private SaveWadi saveWadi;
      private Integer qty;
      private Double commissionPerItem;
-     private Integer goodQty;
+     private Double percentage;
      private Double totalCommission;
      private Double price;
-     private Double total;
+     private Double totalAmount;
      private Integer status;
      private Set wadiReturns = new HashSet(0);
 
@@ -31,15 +31,15 @@ public class SaveWadiItems  implements java.io.Serializable {
         this.item = item;
         this.saveWadi = saveWadi;
     }
-    public SaveWadiItems(Item item, SaveWadi saveWadi, Integer qty, Double commissionPerItem, Integer goodQty, Double totalCommission, Double price, Double total, Integer status, Set wadiReturns) {
+    public SaveWadiItems(Item item, SaveWadi saveWadi, Integer qty, Double commissionPerItem, Double percentage, Double totalCommission, Double price, Double totalAmount, Integer status, Set wadiReturns) {
        this.item = item;
        this.saveWadi = saveWadi;
        this.qty = qty;
        this.commissionPerItem = commissionPerItem;
-       this.goodQty = goodQty;
+       this.percentage = percentage;
        this.totalCommission = totalCommission;
        this.price = price;
-       this.total = total;
+       this.totalAmount = totalAmount;
        this.status = status;
        this.wadiReturns = wadiReturns;
     }
@@ -79,12 +79,12 @@ public class SaveWadiItems  implements java.io.Serializable {
     public void setCommissionPerItem(Double commissionPerItem) {
         this.commissionPerItem = commissionPerItem;
     }
-    public Integer getGoodQty() {
-        return this.goodQty;
+    public Double getPercentage() {
+        return this.percentage;
     }
     
-    public void setGoodQty(Integer goodQty) {
-        this.goodQty = goodQty;
+    public void setPercentage(Double percentage) {
+        this.percentage = percentage;
     }
     public Double getTotalCommission() {
         return this.totalCommission;
@@ -100,12 +100,12 @@ public class SaveWadiItems  implements java.io.Serializable {
     public void setPrice(Double price) {
         this.price = price;
     }
-    public Double getTotal() {
-        return this.total;
+    public Double getTotalAmount() {
+        return this.totalAmount;
     }
     
-    public void setTotal(Double total) {
-        this.total = total;
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
     }
     public Integer getStatus() {
         return this.status;

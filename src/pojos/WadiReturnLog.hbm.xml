@@ -3,19 +3,16 @@
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated Jun 7, 2020 5:09:48 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="pojos.SaveWadiPayment" table="save_wadi_payment" catalog="wije_wadi_manage" optimistic-lock="version">
-        <id name="saveWadiPaymentId" type="java.lang.Integer">
-            <column name="save_wadi_payment_id" />
+    <class name="pojos.WadiReturnLog" table="wadi_return_log" catalog="wije_wadi_manage" optimistic-lock="version">
+        <id name="wadiReturnLogId" type="java.lang.Integer">
+            <column name="wadi_return_log_id" />
             <generator class="identity" />
         </id>
         <many-to-one name="saveWadiWorker" class="pojos.SaveWadiWorker" fetch="select">
             <column name="save_wadi_worker_id" not-null="true" />
         </many-to-one>
-        <property name="amountTotal" type="java.lang.Double">
-            <column name="amount_total" precision="22" scale="0" />
-        </property>
-        <property name="status" type="java.lang.Integer">
-            <column name="status" />
+        <property name="returnCommission" type="java.lang.Double">
+            <column name="return_commission" precision="22" scale="0" />
         </property>
     </class>
 </hibernate-mapping>
